@@ -193,7 +193,7 @@ MonoBehaviour:
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
-  offlineScene: 
+  offlineScene: Assets/Scenes/GameScene.unity
   onlineScene: 
   offlineSceneLoadDelay: 0
   transport: {fileID: 0}
@@ -202,7 +202,7 @@ MonoBehaviour:
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 8724655233675050318, guid: ecc1cfb6d7d6b874abe35cb5395b82bb, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
@@ -221,8 +221,8 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  _gameScene: 
-  _playerRoomDataPrefab: {fileID: 0}
+  _gameScene: Assets/Scenes/GameScene.unity
+  _playerRoomDataPrefab: {fileID: 3508362204262252363, guid: ecc1cfb6d7d6b874abe35cb5395b82bb, type: 3}
 --- !u!1 &496568846
 GameObject:
   m_ObjectHideFlags: 0

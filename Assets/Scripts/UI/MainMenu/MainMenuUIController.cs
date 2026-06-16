@@ -1,19 +1,32 @@
+using JJ26.Input;
+using JJ26.Network;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace JJ26.UI
 {
 	public class MainMenuUIController : UIController
 	{
-		[SerializeField] private TMP_InputField _inputField;
-		[SerializeField] Button _continueButton;
+		[SerializeField] private TMP_InputField _nameInputField;
+		[SerializeField] private TMP_InputField _ipInputField;
+
+		[SerializeField] Button _confirmNameButton;
+		[SerializeField] Button _confirmIPButton;
+
+		[SerializeField] GameObject _nameInputPanelGO;
+		[SerializeField] GameObject _ipInputPanelGO;
+		[SerializeField] GameObject _buttonRootGO;
 
 		private string _displayName;
 
 		private const string _playerPrefsNameKey = "PlayerName";
 
-		private MainMenuUIController _mainMenuUISystem;
+		private MainMenuUISystem _mainMenuUISystem;
+		private InputSystem _inputSystem;
+		private UIStateSystem _uiStateSystem;
+		private GameNetworkManager _networkManager;
+
 
 		#region UIController
 
@@ -21,29 +34,43 @@ namespace JJ26.UI
 		{
 			base.Initialise();
 
-			_mainMenuUISystem = FindAnyObjectByType(typeof(MainMenuUIController)) as MainMenuUIController;
+			_mainMenuUISystem = FindAnyObjectByType(typeof(MainMenuUISystem)) as MainMenuUISystem;
+			_inputSystem = FindAnyObjectByType(typeof(InputSystem)) as InputSystem;
+			_uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
+			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
+
+			_networkManager.OnClientConnected -= HandleClientConnected;
+			_networkManager.OnClientDisconnected -= HandleClientDisconnected;
+
+			_networkManager.OnClientConnected += HandleClientConnected;
+			_networkManager.OnClientDisconnected += HandleClientDisconnected;
+
 
 			InitialiseInputField();
-			RefreshConfirmActive();
+			RefreshConfirmNameActive();
+			RefreshConfirmIPActive();
 		}
 
 		private void InitialiseInputField()
 		{
 			if(!PlayerPrefs.HasKey(_playerPrefsNameKey)) { return; }
-			_inputField.text = PlayerPrefs.GetString(_playerPrefsNameKey);
+			_nameInputField.text = PlayerPrefs.GetString(_playerPrefsNameKey);
 		}
 
 		public void SavePlayerName()
 		{
-			Debug.Log("Saving player name " + _inputField.text);
+			Debug.Log("Saving player name " + _nameInputField.text);
 
-			_displayName = _inputField.text;
+			_displayName = _nameInputField.text;
 			PlayerPrefs.SetString(_playerPrefsNameKey, _displayName);
 		}
 
 		public override void SetActive(bool active)
 		{
 			base.SetActive(active);
+			_nameInputPanelGO.SetActive(true);
+			_buttonRootGO.SetActive(false);
+			_ipInputPanelGO.SetActive(false);
 		}
 
 		public override void UpdateController()
@@ -58,33 +85,107 @@ namespace JJ26.UI
 			UpdateInput();
 		}
 
-		private void RefreshConfirmActive()
+		private void RefreshConfirmNameActive()
 		{
-			string name = _inputField.text;
-			_continueButton.interactable = !string.IsNullOrEmpty(name);
+			string name = _nameInputField.text;
+			_confirmNameButton.interactable = !string.IsNullOrEmpty(name);
+		}
+
+		private void RefreshConfirmIPActive()
+		{
+			string ip = _ipInputField.text;
+			_confirmIPButton.interactable = !string.IsNullOrEmpty(ip);
 		}
 
 		#endregion //UIController
 
 		public void UpdateInput()
 		{
-
+			if(_inputSystem.UICancelPressed)
+			{
+				Input_UICancelPressed();
+			}
 		}
 
 		#region InputSignals
 
 		public void Input_OnInputValueChanged(string newValue)
 		{
-			RefreshConfirmActive();
+			RefreshConfirmNameActive();
 		}
 
-		public void Input_OnConfirmPressed()
+		public void Input_OnConfirmNamePressed()
 		{
-			if(string.IsNullOrEmpty(_inputField.text)) { return; }
+			if(string.IsNullOrEmpty(_nameInputField.text)) { return; }
 			SavePlayerName();
+			_nameInputPanelGO.SetActive(false);
+			_buttonRootGO.SetActive(true);
+		}
+
+		public void Input_OnConfirmIPPressed()
+		{
+			string ipText = _ipInputField.text;
+			if (string.IsNullOrEmpty(ipText)) { return; }
+
+			_confirmIPButton.interactable = false;
+			_networkManager.networkAddress = ipText;
+			_networkManager.StartClient();
+		}
+
+
+		public void Input_HostLobbyPressed()
+		{
+			_networkManager.StartHost();
+			_buttonRootGO.SetActive(false);
+			//go to lobby screen
+			Debug.Log("go to lobby screen");
+		}
+
+		public void Input_JoinLobbyPressed()
+		{
+			_ipInputPanelGO.SetActive(true);
+		}
+
+		public void Input_UICancelPressed()
+		{
+			if (_ipInputPanelGO.activeSelf)
+			{
+				_ipInputPanelGO.SetActive(false);
+				_buttonRootGO.SetActive(true);
+				return;
+			}
+
+			if (_buttonRootGO.activeSelf)
+			{
+				_buttonRootGO.SetActive(false);
+				_nameInputPanelGO.SetActive(true);
+				return;
+			}
+
+			if (_nameInputPanelGO.activeSelf)
+			{
+				_uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
+				return;
+			}
 		}
 
 		#endregion //InputSignals
+
+		#region Network
+
+		public void HandleClientConnected()
+		{
+			_confirmIPButton.interactable = true;
+			Debug.Log("Client connected!");
+		}
+
+		public void HandleClientDisconnected()
+		{
+			_confirmIPButton.interactable = true;
+			Debug.Log("Client disconnected!");
+		}
+
+		#endregion //Network
 	}
 }
 
