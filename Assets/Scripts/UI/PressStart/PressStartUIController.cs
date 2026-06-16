@@ -5,7 +5,16 @@ namespace JJ26.UI
 {
     public class PressStartUIController : UIController
     {
+		private PressStartUISystem _pressStartUISystem;
+
 		#region UIController
+
+		public override void Initialise()
+		{
+			base.Initialise();
+
+			_pressStartUISystem = FindAnyObjectByType(typeof(PressStartUISystem)) as PressStartUISystem;
+		}
 
 		public override void SetActive(bool active)
 		{
@@ -28,17 +37,19 @@ namespace JJ26.UI
 
 		public void UpdateInput()
 		{
-			//if (Input.InputSystem.Instance.UIConfirmPressed)
-			//{
-			//	Input_StartButtonClicked();
-			//}
+
 		}
 
 		#region InputSignals
 
 		public void Input_StartButtonClicked()
 		{
-			//PressStartUISystem.Instance.Input_StartButtonPressed();
+			_pressStartUISystem.Input_StartButtonPress();
+		}
+
+		public void Input_CreditsButtonClicked()
+		{
+			_pressStartUISystem.Input_CreditsButtonPress();
 		}
 
 		#endregion //InputSignals

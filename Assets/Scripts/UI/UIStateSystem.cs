@@ -39,6 +39,8 @@ namespace JJ26.UI
 			{
 				case EUIState.PressStart:
 					return FindAnyObjectByType(typeof(PressStartUISystem)) as PressStartUISystem;
+				case EUIState.MainMenu:
+					return FindAnyObjectByType(typeof(MainMenuUISystem)) as MainMenuUISystem;
 				default:
 					Debug.LogWarning("[UI] No UI System found for UI State " + state.ToString());
 					return null;
