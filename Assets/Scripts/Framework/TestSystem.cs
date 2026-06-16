@@ -8,7 +8,7 @@ namespace JJ26.Framework
 		{
 			base.UpdateSystem();
 
-			Debug.Log("[TEST] update test system at time " + Time.time.ToString());
+			
 		}
 	}
 }

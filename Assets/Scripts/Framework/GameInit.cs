@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using JJ26.UI;
 
 namespace JJ26.Framework
 {
@@ -20,7 +21,10 @@ namespace JJ26.Framework
             InstantiateSystems();
             InitialiseSystems();
             SetSystemCallbacks();
-		}
+
+            var uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
+            uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
+        }
 
         void InstantiateSystems()
 		{
@@ -29,6 +33,8 @@ namespace JJ26.Framework
             foreach(BaseGameSystem prefab in _systemPrefabs)
 			{
                 BaseGameSystem system = Instantiate(prefab);
+                system.transform.parent = transform;
+                system.transform.position = Vector3.zero;
                 _systems.Add(system);
             }
 		}
