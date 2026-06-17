@@ -60,7 +60,7 @@ namespace JJ26.Network
 			{
 				var player = conn.identity.GetComponent<PlayerRoomData>();
 				RoomPlayers.Remove(player);
-				UpdateGameReady();
+				UpdatePlayersOfReadyStatus();
 			}
 
 			base.OnServerDisconnect(conn);
@@ -78,7 +78,7 @@ namespace JJ26.Network
 			return true;
 		}
 
-		private void UpdateGameReady()
+		public void UpdatePlayersOfReadyStatus()
 		{
 			bool isGameReady = IsGameReady();
 			foreach(PlayerRoomData roomData in RoomPlayers)
@@ -91,6 +91,22 @@ namespace JJ26.Network
 		{
 			base.OnStopServer();
 			RoomPlayers.Clear();
+		}
+
+		public PlayerRoomData GetLocalPlayerData()
+		{
+			PlayerRoomData foundPlayer = null;
+			foreach(var player in RoomPlayers)
+			{
+				if (player.isLocalPlayer) { foundPlayer = player; }
+			}
+			return foundPlayer;
+		}
+
+		public bool IsHosting()
+		{
+			var player = GetLocalPlayerData();
+			return null == player ? false : player.IsLeader;
 		}
 	}
 }

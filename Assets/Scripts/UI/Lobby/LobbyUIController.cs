@@ -3,30 +3,27 @@ using JJ26.Network;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace JJ26.UI
 {
 	public class LobbyUIController : UIController
 	{
-		[SerializeField] private TMP_InputField _nameInputField;
-		[SerializeField] private TMP_InputField _ipInputField;
+		[SerializeField] Button _readyUpButton;
+		[SerializeField] Button _startGameButton;
 
-		[SerializeField] Button _confirmNameButton;
-		[SerializeField] Button _confirmIPButton;
+		public Button StartGameButton => _startGameButton;
 
-		[SerializeField] GameObject _nameInputPanelGO;
-		[SerializeField] GameObject _ipInputPanelGO;
 		[SerializeField] GameObject _buttonRootGO;
 
-		private string _displayName;
-
-		private const string _playerPrefsNameKey = "PlayerName";
+		[SerializeField] List<TMP_Text> _playerNameTexts;
+		[SerializeField] List<TMP_Text> _playerReadyTexts;
+		[SerializeField] List<TMP_Text> _playerNotReadyTexts;
 
 		private MainMenuUISystem _mainMenuUISystem;
 		private InputSystem _inputSystem;
 		private UIStateSystem _uiStateSystem;
 		private GameNetworkManager _networkManager;
-
 
 		#region UIController
 
@@ -38,39 +35,11 @@ namespace JJ26.UI
 			_inputSystem = FindAnyObjectByType(typeof(InputSystem)) as InputSystem;
 			_uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
 			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
-
-			//_networkManager.OnClientConnected -= HandleClientConnected;
-			//_networkManager.OnClientDisconnected -= HandleClientDisconnected;
-
-			//_networkManager.OnClientConnected += HandleClientConnected;
-			//_networkManager.OnClientDisconnected += HandleClientDisconnected;
-
-
-			//InitialiseInputField();
-			//RefreshConfirmNameActive();
-			//RefreshConfirmIPActive();
-		}
-
-		private void InitialiseInputField()
-		{
-			if(!PlayerPrefs.HasKey(_playerPrefsNameKey)) { return; }
-			_nameInputField.text = PlayerPrefs.GetString(_playerPrefsNameKey);
-		}
-
-		public void SavePlayerName()
-		{
-			//Debug.Log("Saving player name " + _nameInputField.text);
-
-			//_displayName = _nameInputField.text;
-			//PlayerPrefs.SetString(_playerPrefsNameKey, _displayName);
 		}
 
 		public override void SetActive(bool active)
 		{
 			base.SetActive(active);
-			//_nameInputPanelGO.SetActive(true);
-			//_buttonRootGO.SetActive(false);
-			//_ipInputPanelGO.SetActive(false);
 		}
 
 		public override void UpdateController()
@@ -85,16 +54,24 @@ namespace JJ26.UI
 			UpdateInput();
 		}
 
-		private void RefreshConfirmNameActive()
+		public void RefreshDisplay()
 		{
-			string name = _nameInputField.text;
-			_confirmNameButton.interactable = !string.IsNullOrEmpty(name);
-		}
+			for (int textIndex = 0; textIndex < _playerNameTexts.Count; textIndex++)
+			{
+				_playerNameTexts[textIndex].text = "Waiting for player...";
+				_playerReadyTexts[textIndex].gameObject.SetActive(false);
+				_playerNotReadyTexts[textIndex].gameObject.SetActive(false);
+			}
 
-		private void RefreshConfirmIPActive()
-		{
-			string ip = _ipInputField.text;
-			_confirmIPButton.interactable = !string.IsNullOrEmpty(ip);
+			for(int playerIndex = 0; playerIndex < _networkManager.RoomPlayers.Count; playerIndex++)
+			{
+				var player = _networkManager.RoomPlayers[playerIndex];
+				_playerNameTexts[playerIndex].text = player.DisplayName;
+				_playerReadyTexts[playerIndex].gameObject.SetActive(player.IsReady);
+				_playerNotReadyTexts[playerIndex].gameObject.SetActive(!player.IsReady);
+
+				Debug.Log("Setting UI of player " + playerIndex + " to isReady = " + player.IsReady.ToString());
+			}
 		}
 
 		#endregion //UIController
@@ -109,83 +86,38 @@ namespace JJ26.UI
 
 		#region InputSignals
 
-		public void Input_OnInputValueChanged(string newValue)
-		{
-			RefreshConfirmNameActive();
-		}
-
-		public void Input_OnConfirmNamePressed()
-		{
-			if(string.IsNullOrEmpty(_nameInputField.text)) { return; }
-			SavePlayerName();
-			_nameInputPanelGO.SetActive(false);
-			_buttonRootGO.SetActive(true);
-		}
-
-		public void Input_OnConfirmIPPressed()
-		{
-			string ipText = _ipInputField.text;
-			if (string.IsNullOrEmpty(ipText)) { return; }
-
-			_confirmIPButton.interactable = false;
-			_networkManager.networkAddress = ipText;
-			_networkManager.StartClient();
-		}
-
-
-		public void Input_HostLobbyPressed()
-		{
-			_networkManager.StartHost();
-			_buttonRootGO.SetActive(false);
-			//go to lobby screen
-			Debug.Log("go to lobby screen");
-		}
-
-		public void Input_JoinLobbyPressed()
-		{
-			_ipInputPanelGO.SetActive(true);
-		}
-
 		public void Input_UICancelPressed()
 		{
-			//if (_ipInputPanelGO.activeSelf)
-			//{
-			//	_ipInputPanelGO.SetActive(false);
-			//	_buttonRootGO.SetActive(true);
-			//	return;
-			//}
+			if(_networkManager.IsHosting())
+			{
+				//TODO: disconnect host and boot clients back to main menu
+				return;
+			}
 
-			//if (_buttonRootGO.activeSelf)
-			//{
-			//	_buttonRootGO.SetActive(false);
-			//	_nameInputPanelGO.SetActive(true);
-			//	return;
-			//}
+			_networkManager.StopClient();
+			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
+		}
 
-			//if (_nameInputPanelGO.activeSelf)
-			//{
-			//	_uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
-			//	return;
-			//}
+		public void Input_ReadyButtonPressed()
+		{
+			PlayerRoomData playerData = _networkManager.GetLocalPlayerData();
+			if(playerData)
+			{
+				playerData.CmdSetReady(!playerData.IsReady);
+			}
+		}
+
+		public void Input_StartGameButtonPressed()
+		{
+			_networkManager.GetLocalPlayerData().CmdStartGame();
 		}
 
 		#endregion //InputSignals
 
-		#region Network
-
-		public void HandleClientConnected()
+		public void OnPlayerLeaderStatusSet()
 		{
-			_confirmIPButton.interactable = true;
-			Debug.Log("Client connected!");
-		}
 
-		public void HandleClientDisconnected()
-		{
-			_confirmIPButton.interactable = true;
-			Debug.Log("Client disconnected!");
 		}
-
-		#endregion //Network
 	}
 }
 

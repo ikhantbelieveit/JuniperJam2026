@@ -19,6 +19,7 @@ namespace JJ26.UI
 		[SerializeField] GameObject _buttonRootGO;
 
 		private string _displayName;
+		public string DisplayName => _displayName;
 
 		private const string _playerPrefsNameKey = "PlayerName";
 
