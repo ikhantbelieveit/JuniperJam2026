@@ -221,6 +221,7 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  _minPlayers: 2
   _gameScene: Assets/Scenes/GameScene.unity
   _playerRoomDataPrefab: {fileID: 3508362204262252363, guid: ecc1cfb6d7d6b874abe35cb5395b82bb, type: 3}
 --- !u!1 &496568846
@@ -521,6 +522,7 @@ MonoBehaviour:
   - {fileID: 3628529538244434519, guid: 2b0274e752682314294641f331acfb34, type: 3}
   - {fileID: 3073400533011508290, guid: d430b5f1900e7c7438dfa770eab26c89, type: 3}
   - {fileID: 253734816068001672, guid: 64beeb8b941a1bc48b7e78cc47490e93, type: 3}
+  - {fileID: 2336649543041897012, guid: cf6e5e39cc4c47e40b0c0079217cc8a6, type: 3}
 --- !u!4 &1025435239
 Transform:
   m_ObjectHideFlags: 0

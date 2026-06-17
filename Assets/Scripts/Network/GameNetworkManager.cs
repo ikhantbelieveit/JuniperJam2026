@@ -1,13 +1,19 @@
 using UnityEngine;
 using Mirror;
+using System;
+using System.Collections.Generic;
 
 namespace JJ26.Network
 {
     public class GameNetworkManager : NetworkManager
     {
+		[SerializeField] private int _minPlayers = 2;
+
         [Scene] [SerializeField] private string _gameScene = string.Empty;
 
         [SerializeField] private PlayerRoomData _playerRoomDataPrefab;
+
+		public List<PlayerRoomData> RoomPlayers { get; } = new();
 
         public delegate void ClientConnectEvent();
         public event ClientConnectEvent OnClientConnected;
@@ -41,9 +47,50 @@ namespace JJ26.Network
 
 		public override void OnServerAddPlayer(NetworkConnectionToClient conn)
 		{
-			PlayerRoomData roomData = Instantiate(_playerRoomDataPrefab);
+			bool isLeader = RoomPlayers.Count == 0;
 
+			PlayerRoomData roomData = Instantiate(_playerRoomDataPrefab);
+			roomData.IsLeader = isLeader;
 			NetworkServer.AddPlayerForConnection(conn, roomData.gameObject);
+		}
+
+		public override void OnServerDisconnect(NetworkConnectionToClient conn)
+		{
+			if(conn.identity != null)
+			{
+				var player = conn.identity.GetComponent<PlayerRoomData>();
+				RoomPlayers.Remove(player);
+				UpdateGameReady();
+			}
+
+			base.OnServerDisconnect(conn);
+		}
+
+		private bool IsGameReady()
+		{
+			if(numPlayers < _minPlayers) { return false; }
+
+			foreach(var player in RoomPlayers)
+			{
+				if(!player.IsReady) { return false; }
+			}
+
+			return true;
+		}
+
+		private void UpdateGameReady()
+		{
+			bool isGameReady = IsGameReady();
+			foreach(PlayerRoomData roomData in RoomPlayers)
+			{
+				roomData.UpdateGameReady(isGameReady);
+			}
+		}
+
+		public override void OnStopServer()
+		{
+			base.OnStopServer();
+			RoomPlayers.Clear();
 		}
 	}
 }

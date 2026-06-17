@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace JJ26.UI
 {
-	public class MainMenuUIController : UIController
+	public class LobbyUIController : UIController
 	{
 		[SerializeField] private TMP_InputField _nameInputField;
 		[SerializeField] private TMP_InputField _ipInputField;
@@ -39,16 +39,16 @@ namespace JJ26.UI
 			_uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
 			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
 
-			_networkManager.OnClientConnected -= HandleClientConnected;
-			_networkManager.OnClientDisconnected -= HandleClientDisconnected;
+			//_networkManager.OnClientConnected -= HandleClientConnected;
+			//_networkManager.OnClientDisconnected -= HandleClientDisconnected;
 
-			_networkManager.OnClientConnected += HandleClientConnected;
-			_networkManager.OnClientDisconnected += HandleClientDisconnected;
+			//_networkManager.OnClientConnected += HandleClientConnected;
+			//_networkManager.OnClientDisconnected += HandleClientDisconnected;
 
 
-			InitialiseInputField();
-			RefreshConfirmNameActive();
-			RefreshConfirmIPActive();
+			//InitialiseInputField();
+			//RefreshConfirmNameActive();
+			//RefreshConfirmIPActive();
 		}
 
 		private void InitialiseInputField()
@@ -59,18 +59,18 @@ namespace JJ26.UI
 
 		public void SavePlayerName()
 		{
-			Debug.Log("Saving player name " + _nameInputField.text);
+			//Debug.Log("Saving player name " + _nameInputField.text);
 
-			_displayName = _nameInputField.text;
-			PlayerPrefs.SetString(_playerPrefsNameKey, _displayName);
+			//_displayName = _nameInputField.text;
+			//PlayerPrefs.SetString(_playerPrefsNameKey, _displayName);
 		}
 
 		public override void SetActive(bool active)
 		{
 			base.SetActive(active);
-			_nameInputPanelGO.SetActive(true);
-			_buttonRootGO.SetActive(false);
-			_ipInputPanelGO.SetActive(false);
+			//_nameInputPanelGO.SetActive(true);
+			//_buttonRootGO.SetActive(false);
+			//_ipInputPanelGO.SetActive(false);
 		}
 
 		public override void UpdateController()
@@ -139,7 +139,6 @@ namespace JJ26.UI
 			_buttonRootGO.SetActive(false);
 			//go to lobby screen
 			Debug.Log("go to lobby screen");
-			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.Lobby);
 		}
 
 		public void Input_JoinLobbyPressed()
@@ -149,25 +148,25 @@ namespace JJ26.UI
 
 		public void Input_UICancelPressed()
 		{
-			if (_ipInputPanelGO.activeSelf)
-			{
-				_ipInputPanelGO.SetActive(false);
-				_buttonRootGO.SetActive(true);
-				return;
-			}
+			//if (_ipInputPanelGO.activeSelf)
+			//{
+			//	_ipInputPanelGO.SetActive(false);
+			//	_buttonRootGO.SetActive(true);
+			//	return;
+			//}
 
-			if (_buttonRootGO.activeSelf)
-			{
-				_buttonRootGO.SetActive(false);
-				_nameInputPanelGO.SetActive(true);
-				return;
-			}
+			//if (_buttonRootGO.activeSelf)
+			//{
+			//	_buttonRootGO.SetActive(false);
+			//	_nameInputPanelGO.SetActive(true);
+			//	return;
+			//}
 
-			if (_nameInputPanelGO.activeSelf)
-			{
-				_uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
-				return;
-			}
+			//if (_nameInputPanelGO.activeSelf)
+			//{
+			//	_uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
+			//	return;
+			//}
 		}
 
 		#endregion //InputSignals
@@ -178,7 +177,6 @@ namespace JJ26.UI
 		{
 			_confirmIPButton.interactable = true;
 			Debug.Log("Client connected!");
-			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.Lobby);
 		}
 
 		public void HandleClientDisconnected()
