@@ -26,8 +26,8 @@ namespace JJ26.UI
 		static EUIState _previousState = EUIState.None;
 		static EUIState _currentState = EUIState.None;
 
-		public EUIState PreviousState => _previousState;
-		public EUIState CurrentState => _currentState;
+		public static EUIState PreviousState => _previousState;
+		public static EUIState CurrentState => _currentState;
 
 		static IUISystem _activeUISystem;
 
@@ -43,6 +43,8 @@ namespace JJ26.UI
 					return FindAnyObjectByType(typeof(MainMenuUISystem)) as MainMenuUISystem;
 				case EUIState.Lobby:
 					return FindAnyObjectByType(typeof(LobbyUISystem)) as LobbyUISystem;
+				case EUIState.Gameplay:
+					return FindAnyObjectByType(typeof(GameplayUISystem)) as GameplayUISystem;
 				default:
 					Debug.LogWarning("[UI] No UI System found for UI State " + state.ToString());
 					return null;

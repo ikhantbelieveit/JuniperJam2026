@@ -6,7 +6,6 @@ namespace JJ26.Framework
 	public class BaseGameSystem : MonoBehaviour
 	{
 		protected bool _isInitialised = false;
-		public bool IsNetworked;
 
 		public virtual void Awake()
 		{

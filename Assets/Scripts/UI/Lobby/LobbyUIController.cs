@@ -112,11 +112,6 @@ namespace JJ26.UI
 		}
 
 		#endregion //InputSignals
-
-		public void OnPlayerLeaderStatusSet()
-		{
-
-		}
 	}
 }
 

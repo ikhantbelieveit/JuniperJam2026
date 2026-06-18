@@ -2,15 +2,17 @@ using UnityEngine;
 using Mirror;
 using System.Linq;
 using System.Collections.Generic;
+using JJ26.Framework;
+using JJ26.Network;
 
-namespace JJ26.Network
+namespace JJ26.Gameplay
 {
-    public class PlayerSpawnSystem : NetworkBehaviour
+    public class PlayerSpawnSystem : BaseGameSystem
     {
         [SerializeField] GameObject _playerPrefab;
 
         private static List<Transform> _spawnPoints = new();
-        private int _nextSpawnIndex = 0;
+        private static int _nextSpawnIndex = 0;
 
         public static void AddSpawnPoint(Transform transform)
 		{
@@ -18,25 +20,40 @@ namespace JJ26.Network
 			_spawnPoints = _spawnPoints.OrderBy(x => x.GetSiblingIndex()).ToList();
 		}
 
-		public static void RemoveSpawnPoint(Transform transform)
+		public override void SetCallbacks()
 		{
-			_spawnPoints.Remove(transform);
+			base.SetCallbacks();
+
+			GameNetworkManager.Broadcast_OnLevelStarted -= OnLevelStarted;
+			GameNetworkManager.Broadcast_OnLevelStarted += OnLevelStarted;
+
+			GameNetworkManager.Broadcast_OnLevelExited -= OnLevelExited;
+			GameNetworkManager.Broadcast_OnLevelExited += OnLevelExited;
 		}
 
-		public override void OnStartServer()
+		public override void ResetSystem()
 		{
-			base.OnStartServer();
-			GameNetworkManager.OnServerReadied += SpawnPlayer;
+			base.ResetSystem();
+
+			_spawnPoints.Clear();
+			_nextSpawnIndex = 0;
 		}
 
-		[ServerCallback]
-
-		private void OnDestroy()
+		public void OnLevelStarted()
 		{
-			GameNetworkManager.OnServerReadied -= SpawnPlayer;
+			PlayerSpawnPoint[] spawnPoints = FindObjectsByType<PlayerSpawnPoint>();
+			foreach(var spawnPoint in spawnPoints)
+			{
+				AddSpawnPoint(spawnPoint.transform);
+			}
 		}
 
-		private void SpawnPlayer(NetworkConnectionToClient conn)
+		public void OnLevelExited()
+		{
+			ResetSystem();
+		}
+
+		public void SpawnPlayer(NetworkConnectionToClient conn)
 		{
 			Transform spawnPoint = _spawnPoints.ElementAtOrDefault(_nextSpawnIndex);
 

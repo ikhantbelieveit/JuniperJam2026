@@ -227,7 +227,6 @@ MonoBehaviour:
   _gameScene: Assets/Scenes/GameScene.unity
   _playerLobbyDataPrefab: {fileID: 3508362204262252363, guid: ecc1cfb6d7d6b874abe35cb5395b82bb, type: 3}
   _playerGameDataPrefab: {fileID: 572007869026243568, guid: b8ca67a3c4acd67489cf597215bf4ac4, type: 3}
-  _playerSpawnSystemPrefab: {fileID: 6308283852395041415, guid: eb3ff418322f6034c9a64ca8b0cc2697, type: 3}
 --- !u!1 &496568846
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +526,8 @@ MonoBehaviour:
   - {fileID: 3073400533011508290, guid: d430b5f1900e7c7438dfa770eab26c89, type: 3}
   - {fileID: 253734816068001672, guid: 64beeb8b941a1bc48b7e78cc47490e93, type: 3}
   - {fileID: 2336649543041897012, guid: cf6e5e39cc4c47e40b0c0079217cc8a6, type: 3}
+  - {fileID: 6308283852395041415, guid: eb3ff418322f6034c9a64ca8b0cc2697, type: 3}
+  - {fileID: 5801341115596529471, guid: afedf164c6d930041a50e5f83522540c, type: 3}
 --- !u!4 &1025435239
 Transform:
   m_ObjectHideFlags: 0

@@ -5,16 +5,6 @@ namespace JJ26.Gameplay
 {
     public class PlayerSpawnPoint : MonoBehaviour
     {
-		private void Awake()
-		{
-			PlayerSpawnSystem.AddSpawnPoint(transform);
-		}
-
-		private void OnDestroy()
-		{
-			PlayerSpawnSystem.RemoveSpawnPoint(transform);
-		}
-
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.cyan;

@@ -34,10 +34,6 @@ namespace JJ26.Framework
             foreach(BaseGameSystem prefab in _systemPrefabs)
 			{
                 BaseGameSystem system = Instantiate(prefab);
-                if(system.IsNetworked)
-				{
-                    NetworkServer.Spawn(system.gameObject);
-				}
                 system.transform.parent = transform;
                 system.transform.position = Vector3.zero;
                 _systems.Add(system);

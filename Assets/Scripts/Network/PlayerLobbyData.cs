@@ -22,11 +22,6 @@ namespace JJ26.Network
             set
 			{
                 _isLeader = value;
-				var lobbyUI = (FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController);
-				if(lobbyUI)
-				{
-					lobbyUI.OnPlayerLeaderStatusSet();
-				}
             }
 		}
 
