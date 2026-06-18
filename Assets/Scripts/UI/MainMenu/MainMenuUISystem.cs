@@ -59,9 +59,14 @@ namespace JJ26.UI
 
 		[SerializeField] GameObject _uiPrefab;
 
-		private MainMenuUIController _controller;
+		private static MainMenuUIController _controller;
 		private bool _active = false;
 		public bool Active => _active;
+
+		public static string GetDisplayName()
+		{
+			return _controller.DisplayName;
+		}
 
 		#region InputSignals
 

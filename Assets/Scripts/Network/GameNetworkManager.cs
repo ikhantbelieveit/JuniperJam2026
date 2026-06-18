@@ -15,6 +15,7 @@ namespace JJ26.Network
 
         [SerializeField] private PlayerLobbyData _playerLobbyDataPrefab;
 		[SerializeField] private PlayerGameData _playerGameDataPrefab;
+		[SerializeField] private PlayerSpawnSystem _playerSpawnSystemPrefab;
 
 		public List<PlayerLobbyData> LobbyPlayers { get; } = new();
 		public List<PlayerGameData> GamePlayers { get; } = new();
@@ -24,6 +25,9 @@ namespace JJ26.Network
 
         public delegate void ClientDisconnectEvent();
         public event ClientDisconnectEvent OnClientDisconnected;
+
+		public delegate void ServerReadyEvent(NetworkConnectionToClient conn);
+		public static event ServerReadyEvent OnServerReadied;
 
 		public override void OnClientConnect()
 		{
@@ -151,11 +155,34 @@ namespace JJ26.Network
 			if(uiSystem?.CurrentState == UIStateSystem.EUIState.Lobby)
 			{
 				//If entering level, update UI to gameplay UI
-				if (newSceneName.StartsWith("Level_Map"))
+				if (IsGameScene("Level_Map"))
 				{
-					(FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem).EnterScreen(UIStateSystem.EUIState.Gameplay);
+					UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
 				}
 			}
+		}
+
+		public override void OnServerSceneChanged(string sceneName)
+		{
+			base.OnServerSceneChanged(sceneName);
+
+			if(IsGameScene("Level_Map"))
+			{
+				PlayerSpawnSystem spawnSystemInstance = Instantiate(_playerSpawnSystemPrefab);
+				NetworkServer.Spawn(spawnSystemInstance.gameObject);
+			}
+		}
+
+		public override void OnServerReady(NetworkConnectionToClient conn)
+		{
+			base.OnServerReady(conn);
+
+			OnServerReadied?.Invoke(conn);
+		}
+
+		private bool IsGameScene(string sceneName)
+		{
+			return sceneName.StartsWith("Level_Map");
 		}
 	}
 }

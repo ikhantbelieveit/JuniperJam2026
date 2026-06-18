@@ -9,8 +9,6 @@ namespace JJ26.UI
 
 		public UIController Controller => _controller;
 
-		private UIStateSystem _uiStateSystem;
-
 		public void SetActive(bool active)
 		{
 			if(!_isInitialised) { return; }
@@ -25,8 +23,6 @@ namespace JJ26.UI
 		public override void Initialise()
 		{
 			base.Initialise();
-
-			_uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
 
 			InitialiseController();
 		}
@@ -68,7 +64,7 @@ namespace JJ26.UI
 		public void Input_StartButtonPress()
 		{
 			Debug.Log("START BUTTON PRESSED");
-			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
+			UIStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
 		}
 
 		public void Input_CreditsButtonPress()
@@ -78,7 +74,7 @@ namespace JJ26.UI
 
 		public void Input_QuitButtonPress()
 		{
-			_uiStateSystem.QuitToDesktop();
+			UIStateSystem.QuitToDesktop();
 		}
 
 		#endregion //InputSignals

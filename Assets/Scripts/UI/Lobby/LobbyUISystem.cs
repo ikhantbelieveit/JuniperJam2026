@@ -59,9 +59,19 @@ namespace JJ26.UI
 
 		[SerializeField] GameObject _uiPrefab;
 
-		private LobbyUIController _controller;
+		private static LobbyUIController _controller;
 		private bool _active = false;
 		public bool Active => _active;
+
+		public static void SetStartButtonActive(bool active)
+		{
+			_controller.SetStartButtonActive(active);
+		}
+
+		public static void RefreshDisplay()
+		{
+			_controller.RefreshDisplay();
+		}
 
 		#region InputSignals
 

@@ -23,17 +23,17 @@ namespace JJ26.UI
 			Max
 		}
 
-		EUIState _previousState = EUIState.None;
-		EUIState _currentState = EUIState.None;
+		static EUIState _previousState = EUIState.None;
+		static EUIState _currentState = EUIState.None;
 
 		public EUIState PreviousState => _previousState;
 		public EUIState CurrentState => _currentState;
 
-		IUISystem _activeUISystem;
+		static IUISystem _activeUISystem;
 
-		bool _hasActiveUI;
+		static bool _hasActiveUI;
 
-		IUISystem GetSystemForUIState(EUIState state)
+		static IUISystem GetSystemForUIState(EUIState state)
 		{
 			switch (state)
 			{
@@ -49,7 +49,7 @@ namespace JJ26.UI
 			}
 		}
 
-		public void TransitionToState(EUIState state)
+		public static void TransitionToState(EUIState state)
 		{
 			if (state == _currentState)
 			{
@@ -84,19 +84,19 @@ namespace JJ26.UI
 			EnterScreen(EUIState.None);
 		}
 
-		public void EnterScreen(EUIState state)
+		public static void EnterScreen(EUIState state)
 		{
 			//functionality for changing audio goes here
 
 			TransitionToState(state);
 		}
 
-		public void EnterPreviousScreen()
+		public static void EnterPreviousScreen()
 		{
 			EnterScreen(_previousState);
 		}
 
-		public void QuitToDesktop()
+		public static void QuitToDesktop()
 		{
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.ExitPlaymode();

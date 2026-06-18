@@ -79,11 +79,11 @@ namespace JJ26.Input
 		public bool MouseOverlapsUI { get; private set; }
 		public bool FastForward { get; private set; }
 
-		public bool UIConfirm { get; private set; }
-		public bool UIConfirmPressed { get; private set; }
+		public static bool UIConfirm { get; private set; }
+		public static bool UIConfirmPressed { get; private set; }
 
-		public bool UICancel { get; private set; }
-		public bool UICancelPressed { get; private set; }
+		public static bool UICancel { get; private set; }
+		public static bool UICancelPressed { get; private set; }
 
 		EControllerType _lastControllerType;
 		public EControllerType LastControllerType

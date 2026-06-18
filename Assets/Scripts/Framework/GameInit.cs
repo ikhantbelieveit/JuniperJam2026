@@ -1,4 +1,5 @@
 using UnityEngine;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using JJ26.UI;
@@ -23,8 +24,7 @@ namespace JJ26.Framework
             InitialiseSystems();
             SetSystemCallbacks();
 
-            var uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
-            uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
+            UIStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
         }
 
         void InstantiateSystems()
@@ -34,6 +34,10 @@ namespace JJ26.Framework
             foreach(BaseGameSystem prefab in _systemPrefabs)
 			{
                 BaseGameSystem system = Instantiate(prefab);
+                if(system.IsNetworked)
+				{
+                    NetworkServer.Spawn(system.gameObject);
+				}
                 system.transform.parent = transform;
                 system.transform.position = Vector3.zero;
                 _systems.Add(system);

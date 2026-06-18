@@ -23,9 +23,6 @@ namespace JJ26.UI
 
 		private const string _playerPrefsNameKey = "PlayerName";
 
-		private MainMenuUISystem _mainMenuUISystem;
-		private InputSystem _inputSystem;
-		private UIStateSystem _uiStateSystem;
 		private GameNetworkManager _networkManager;
 
 
@@ -35,9 +32,6 @@ namespace JJ26.UI
 		{
 			base.Initialise();
 
-			_mainMenuUISystem = FindAnyObjectByType(typeof(MainMenuUISystem)) as MainMenuUISystem;
-			_inputSystem = FindAnyObjectByType(typeof(InputSystem)) as InputSystem;
-			_uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
 			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
 
 			_networkManager.OnClientConnected -= HandleClientConnected;
@@ -102,7 +96,7 @@ namespace JJ26.UI
 
 		public void UpdateInput()
 		{
-			if(_inputSystem.UICancelPressed)
+			if(InputSystem.UICancelPressed)
 			{
 				Input_UICancelPressed();
 			}
@@ -140,7 +134,7 @@ namespace JJ26.UI
 			_buttonRootGO.SetActive(false);
 			//go to lobby screen
 			Debug.Log("go to lobby screen");
-			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.Lobby);
+			UIStateSystem.EnterScreen(UIStateSystem.EUIState.Lobby);
 		}
 
 		public void Input_JoinLobbyPressed()
@@ -166,7 +160,7 @@ namespace JJ26.UI
 
 			if (_nameInputPanelGO.activeSelf)
 			{
-				_uiStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
+				UIStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
 				return;
 			}
 		}
@@ -179,7 +173,7 @@ namespace JJ26.UI
 		{
 			_confirmIPButton.interactable = true;
 			Debug.Log("Client connected!");
-			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.Lobby);
+			UIStateSystem.EnterScreen(UIStateSystem.EUIState.Lobby);
 		}
 
 		public void HandleClientDisconnected()

@@ -39,14 +39,13 @@ namespace JJ26.Network
 		{
 			if(!_isLeader) { return; }
 
-			(FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController).StartGameButton.gameObject.SetActive(isReady);
+			LobbyUISystem.SetStartButtonActive(isReady);
 		}
 
 		public override void OnStartAuthority()
 		{
 			base.OnStartAuthority();
-			MainMenuUISystem mainMenuUISystem = (FindAnyObjectByType(typeof(MainMenuUISystem)) as MainMenuUISystem);
-			string name = (mainMenuUISystem.Controller as MainMenuUIController).DisplayName;
+			string name = MainMenuUISystem.GetDisplayName();
 			CmdSetDisplayName(name);
 		}
 
@@ -78,11 +77,7 @@ namespace JJ26.Network
 					}
 				}
 			}
-			var lobbyUI = FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController;
-			if(lobbyUI)
-			{
-				lobbyUI.RefreshDisplay();
-			}
+			LobbyUISystem.RefreshDisplay();
 		}
 
 		[Command]
@@ -95,7 +90,6 @@ namespace JJ26.Network
 		public void CmdSetReady(bool isReady)
 		{
 			IsReady = isReady;
-
 			_networkManager.UpdatePlayersOfReadyStatus();
 		}
 
@@ -103,7 +97,6 @@ namespace JJ26.Network
 		public void CmdStartGame()
 		{
 			if(_networkManager.LobbyPlayers[0].connectionToClient != connectionToClient) { return; }
-			Debug.Log("START GAME");
 			_networkManager.StartGame();
 		}
 	}

@@ -20,9 +20,6 @@ namespace JJ26.UI
 		[SerializeField] List<TMP_Text> _playerReadyTexts;
 		[SerializeField] List<TMP_Text> _playerNotReadyTexts;
 
-		private MainMenuUISystem _mainMenuUISystem;
-		private InputSystem _inputSystem;
-		private UIStateSystem _uiStateSystem;
 		private GameNetworkManager _networkManager;
 
 		#region UIController
@@ -31,9 +28,6 @@ namespace JJ26.UI
 		{
 			base.Initialise();
 
-			_mainMenuUISystem = FindAnyObjectByType(typeof(MainMenuUISystem)) as MainMenuUISystem;
-			_inputSystem = FindAnyObjectByType(typeof(InputSystem)) as InputSystem;
-			_uiStateSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
 			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
 		}
 
@@ -78,10 +72,15 @@ namespace JJ26.UI
 
 		public void UpdateInput()
 		{
-			if(_inputSystem.UICancelPressed)
+			if(InputSystem.UICancelPressed)
 			{
 				Input_UICancelPressed();
 			}
+		}
+
+		public void SetStartButtonActive(bool active)
+		{
+			_startGameButton.gameObject.SetActive(active);
 		}
 
 		#region InputSignals
@@ -95,7 +94,7 @@ namespace JJ26.UI
 			}
 
 			_networkManager.StopClient();
-			_uiStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
+			UIStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
 		}
 
 		public void Input_ReadyButtonPressed()
