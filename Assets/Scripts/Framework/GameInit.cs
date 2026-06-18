@@ -13,6 +13,7 @@ namespace JJ26.Framework
 
 		private void Start()
 		{
+            DontDestroyOnLoad(this);
             InitGame();
         }
 

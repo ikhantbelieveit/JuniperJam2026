@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Mirror;
 using System;
 using System.Collections.Generic;
+using JJ26.UI;
 
 namespace JJ26.Network
 {
@@ -11,11 +13,13 @@ namespace JJ26.Network
 
         [Scene] [SerializeField] private string _gameScene = string.Empty;
 
-        [SerializeField] private PlayerRoomData _playerRoomDataPrefab;
+        [SerializeField] private PlayerLobbyData _playerLobbyDataPrefab;
+		[SerializeField] private PlayerGameData _playerGameDataPrefab;
 
-		public List<PlayerRoomData> RoomPlayers { get; } = new();
+		public List<PlayerLobbyData> LobbyPlayers { get; } = new();
+		public List<PlayerGameData> GamePlayers { get; } = new();
 
-        public delegate void ClientConnectEvent();
+		public delegate void ClientConnectEvent();
         public event ClientConnectEvent OnClientConnected;
 
         public delegate void ClientDisconnectEvent();
@@ -47,9 +51,9 @@ namespace JJ26.Network
 
 		public override void OnServerAddPlayer(NetworkConnectionToClient conn)
 		{
-			bool isLeader = RoomPlayers.Count == 0;
+			bool isLeader = LobbyPlayers.Count == 0;
 
-			PlayerRoomData roomData = Instantiate(_playerRoomDataPrefab);
+			PlayerLobbyData roomData = Instantiate(_playerLobbyDataPrefab);
 			roomData.IsLeader = isLeader;
 			NetworkServer.AddPlayerForConnection(conn, roomData.gameObject);
 		}
@@ -58,8 +62,8 @@ namespace JJ26.Network
 		{
 			if(conn.identity != null)
 			{
-				var player = conn.identity.GetComponent<PlayerRoomData>();
-				RoomPlayers.Remove(player);
+				var player = conn.identity.GetComponent<PlayerLobbyData>();
+				LobbyPlayers.Remove(player);
 				UpdatePlayersOfReadyStatus();
 			}
 
@@ -70,7 +74,7 @@ namespace JJ26.Network
 		{
 			if(numPlayers < _minPlayers) { return false; }
 
-			foreach(var player in RoomPlayers)
+			foreach(var player in LobbyPlayers)
 			{
 				if(!player.IsReady) { return false; }
 			}
@@ -81,7 +85,7 @@ namespace JJ26.Network
 		public void UpdatePlayersOfReadyStatus()
 		{
 			bool isGameReady = IsGameReady();
-			foreach(PlayerRoomData roomData in RoomPlayers)
+			foreach(PlayerLobbyData roomData in LobbyPlayers)
 			{
 				roomData.UpdateGameReady(isGameReady);
 			}
@@ -90,13 +94,13 @@ namespace JJ26.Network
 		public override void OnStopServer()
 		{
 			base.OnStopServer();
-			RoomPlayers.Clear();
+			LobbyPlayers.Clear();
 		}
 
-		public PlayerRoomData GetLocalPlayerData()
+		public PlayerLobbyData GetLocalPlayerData()
 		{
-			PlayerRoomData foundPlayer = null;
-			foreach(var player in RoomPlayers)
+			PlayerLobbyData foundPlayer = null;
+			foreach(var player in LobbyPlayers)
 			{
 				if (player.isLocalPlayer) { foundPlayer = player; }
 			}
@@ -107,6 +111,51 @@ namespace JJ26.Network
 		{
 			var player = GetLocalPlayerData();
 			return null == player ? false : player.IsLeader;
+		}
+
+		public void StartGame()
+		{
+			if(SceneManager.GetActiveScene().path == _gameScene)
+			{
+				if(!IsGameReady()) { return; }
+
+				ServerChangeScene("Level_Map_01");
+			}
+		}
+
+		public override void ServerChangeScene(string newSceneName)
+		{
+			//if going from menu to game
+			if(SceneManager.GetActiveScene().path == _gameScene && newSceneName.StartsWith("Level_Map"))
+			{
+				foreach(var player in LobbyPlayers)
+				{
+					var connection = player.connectionToClient;
+					var gamePlayerInstance = Instantiate(_playerGameDataPrefab);
+					gamePlayerInstance.SetDisplayName(player.DisplayName);
+
+					NetworkServer.Destroy(connection.identity.gameObject);
+					NetworkServer.ReplacePlayerForConnection(connection, gamePlayerInstance.gameObject, ReplacePlayerOptions.KeepAuthority);
+				}
+			}
+
+			base.ServerChangeScene(newSceneName);
+		}
+
+		public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
+		{
+			base.OnClientChangeScene(newSceneName, sceneOperation, customHandling);
+
+			UIStateSystem uiSystem = FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem;
+
+			if(uiSystem?.CurrentState == UIStateSystem.EUIState.Lobby)
+			{
+				//If entering level, update UI to gameplay UI
+				if (newSceneName.StartsWith("Level_Map"))
+				{
+					(FindAnyObjectByType(typeof(UIStateSystem)) as UIStateSystem).EnterScreen(UIStateSystem.EUIState.Gameplay);
+				}
+			}
 		}
 	}
 }

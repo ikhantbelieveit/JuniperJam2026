@@ -76,6 +76,11 @@ namespace JJ26.UI
 			Debug.Log("CREDITS BUTTON PRESSED");
 		}
 
+		public void Input_QuitButtonPress()
+		{
+			_uiStateSystem.QuitToDesktop();
+		}
+
 		#endregion //InputSignals
 	}
 }

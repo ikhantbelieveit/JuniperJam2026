@@ -4,7 +4,7 @@ using JJ26.UI;
 
 namespace JJ26.Network
 {
-    public class PlayerRoomData : NetworkBehaviour
+    public class PlayerLobbyData : NetworkBehaviour
     {
         [SyncVar(hook = nameof(HandleDisplayNameChanged))]
         public string DisplayName = "Loading...";
@@ -22,11 +22,15 @@ namespace JJ26.Network
             set
 			{
                 _isLeader = value;
-                (FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController).OnPlayerLeaderStatusSet();
+				var lobbyUI = (FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController);
+				if(lobbyUI)
+				{
+					lobbyUI.OnPlayerLeaderStatusSet();
+				}
             }
 		}
 
-		private GameNetworkManager _room => NetworkManager.singleton as GameNetworkManager;
+		private GameNetworkManager _networkManager => NetworkManager.singleton as GameNetworkManager;
 
 		public void HandleReadyStatusChanged(bool oldValue, bool newValue) => RefreshLobbyDisplay();
 		public void HandleDisplayNameChanged(string oldValue, string newValue) => RefreshLobbyDisplay();
@@ -50,14 +54,14 @@ namespace JJ26.Network
 		{
 			base.OnStartClient();
 
-			_room.RoomPlayers.Add(this);
+			_networkManager.LobbyPlayers.Add(this);
 		}
 
 		public void OnDestroy()
 		{
-			if(!_room) { return; }
+			if(!_networkManager) { return; }
 
-			_room.RoomPlayers.Remove(this);
+			_networkManager.LobbyPlayers.Remove(this);
 			RefreshLobbyDisplay();
 		}
 
@@ -65,7 +69,7 @@ namespace JJ26.Network
 		{
 			if(!authority)
 			{
-				foreach(var player in _room.RoomPlayers)
+				foreach(var player in _networkManager.LobbyPlayers)
 				{
 					if(player.authority)
 					{
@@ -74,7 +78,11 @@ namespace JJ26.Network
 					}
 				}
 			}
-			(FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController).RefreshDisplay();
+			var lobbyUI = FindAnyObjectByType(typeof(LobbyUIController)) as LobbyUIController;
+			if(lobbyUI)
+			{
+				lobbyUI.RefreshDisplay();
+			}
 		}
 
 		[Command]
@@ -86,17 +94,17 @@ namespace JJ26.Network
 		[Command]
 		public void CmdSetReady(bool isReady)
 		{
-			Debug.Log("TOGGLE READY");
 			IsReady = isReady;
 
-			_room.UpdatePlayersOfReadyStatus();
+			_networkManager.UpdatePlayersOfReadyStatus();
 		}
 
 		[Command]
 		public void CmdStartGame()
 		{
-			if(_room.RoomPlayers[0].connectionToClient != connectionToClient) { return; }
+			if(_networkManager.LobbyPlayers[0].connectionToClient != connectionToClient) { return; }
 			Debug.Log("START GAME");
+			_networkManager.StartGame();
 		}
 	}
 }

@@ -63,9 +63,9 @@ namespace JJ26.UI
 				_playerNotReadyTexts[textIndex].gameObject.SetActive(false);
 			}
 
-			for(int playerIndex = 0; playerIndex < _networkManager.RoomPlayers.Count; playerIndex++)
+			for(int playerIndex = 0; playerIndex < _networkManager.LobbyPlayers.Count; playerIndex++)
 			{
-				var player = _networkManager.RoomPlayers[playerIndex];
+				var player = _networkManager.LobbyPlayers[playerIndex];
 				_playerNameTexts[playerIndex].text = player.DisplayName;
 				_playerReadyTexts[playerIndex].gameObject.SetActive(player.IsReady);
 				_playerNotReadyTexts[playerIndex].gameObject.SetActive(!player.IsReady);
@@ -100,7 +100,7 @@ namespace JJ26.UI
 
 		public void Input_ReadyButtonPressed()
 		{
-			PlayerRoomData playerData = _networkManager.GetLocalPlayerData();
+			PlayerLobbyData playerData = _networkManager.GetLocalPlayerData();
 			if(playerData)
 			{
 				playerData.CmdSetReady(!playerData.IsReady);

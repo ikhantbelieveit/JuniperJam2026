@@ -52,6 +52,11 @@ namespace JJ26.UI
 			_pressStartUISystem.Input_CreditsButtonPress();
 		}
 
+		public void Input_QuitButtonClicked()
+		{
+			_pressStartUISystem.Input_QuitButtonPress();
+		}
+
 		#endregion //InputSignals
 	}
 }
