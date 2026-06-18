@@ -130,6 +130,7 @@ namespace JJ26.Input
 			base.Initialise();
 
 			_playerInput = PlayerInput.Instantiate(_inputPrefab);
+			DontDestroyOnLoad(_playerInput.gameObject);
 
 			SetUpActionMaps(_playerInput);
 			SetUpActions();
@@ -176,7 +177,6 @@ namespace JJ26.Input
 			if (UICancel && !lastUICancel)
 			{
 				UICancelPressed = true;
-				Debug.Log("[INPUT] UI CANCEL PRESSED");
 			}
 
 			//UI Confirm
@@ -187,10 +187,7 @@ namespace JJ26.Input
 			if (UIConfirm && !lastUIConfirm)
 			{
 				UIConfirmPressed = true;
-				Debug.Log("[INPUT] UI CONFIRM PRESSED");
 			}
-
-
 		}
 
 		#endregion // BaseGameSystem
