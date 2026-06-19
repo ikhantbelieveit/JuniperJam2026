@@ -43,15 +43,30 @@ namespace JJ26.Gameplay
 
 		[SerializeField] Rigidbody _rb;
 
+		[SerializeField, Range(0f, 1f)] float _jumpBufferDuration = 0.15f;
+		private float _jumpBufferTimeLeft = 0;
+
+		[ClientCallback]
+
+		private void Update()
+		{
+			if (InputSystem.JumpPressed)
+			{
+				_jumpBufferTimeLeft = _jumpBufferDuration;
+			}
+		}
+
 		[ClientCallback]
 		private void FixedUpdate()
 		{
+			_currentVelocity = _rb.linearVelocity;
 			UpdateJumpState();
 			UpdateWalkVelocity();
 
-			if(InputSystem.JumpPressed)
+			if(_jumpBufferTimeLeft > 0)
 			{
 				Jump();
+				_jumpBufferTimeLeft = 0;
 			}
 
 			_rb.linearVelocity = _currentVelocity;
@@ -121,7 +136,8 @@ namespace JJ26.Gameplay
 
 		private void UpdateJumpState()
 		{
-			_currentVelocity = _rb.linearVelocity;
+			_jumpBufferTimeLeft -= Time.fixedDeltaTime;
+			_jumpBufferTimeLeft = Mathf.Max(0, _jumpBufferTimeLeft);
 			_stepsSinceLastJump++;
 			if (IsGrounded)
 			{

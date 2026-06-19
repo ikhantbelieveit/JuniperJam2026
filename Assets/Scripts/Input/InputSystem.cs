@@ -216,7 +216,6 @@ namespace JJ26.Input
 			{
 				JumpReleased = true;
 			}	
-
 		}
 
 		#endregion // BaseGameSystem
