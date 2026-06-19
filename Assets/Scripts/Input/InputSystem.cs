@@ -28,7 +28,7 @@ namespace JJ26.Input
 		private static readonly string[] INPUT_ACTION_MAP_IDS =
 		{
 			"UI",
-
+			"Player",
 		};
 
 		public delegate void ControllerChangeEvent(EControllerType previous, EControllerType current);
@@ -84,6 +84,12 @@ namespace JJ26.Input
 
 		public static bool UICancel { get; private set; }
 		public static bool UICancelPressed { get; private set; }
+
+		public static Vector2 WalkValue { get; private set; }
+
+		public static bool Jump { get; private set; }
+		public static bool JumpPressed { get; private set; }
+		public static bool JumpReleased { get; private set; }
 
 		EControllerType _lastControllerType;
 		public EControllerType LastControllerType
@@ -154,9 +160,12 @@ namespace JJ26.Input
 				return;
 			}
 
-			//Clear all values
+			//Clear all press/release values
 			UICancelPressed = false;
 			UIConfirmPressed = false;
+			WalkValue = Vector2.zero;
+			JumpPressed = false;
+			JumpReleased = false;
 
 			EControllerPlatformType platformType = LastControllerPlatformType;
 			LastControllerType = GetCurrentController(out platformType, out LastInputDevice);
@@ -188,6 +197,26 @@ namespace JJ26.Input
 			{
 				UIConfirmPressed = true;
 			}
+
+			//Walk value
+			WalkValue = inputAction_Walk.ReadValue<Vector2>();
+			WalkValue = Vector2.ClampMagnitude(WalkValue, 1);
+
+			//Jump
+			bool lastJump = Jump;
+
+			Jump = inputAction_Jump.ReadValue<float>() > 0;
+
+			if(Jump && !lastJump)
+			{
+				JumpPressed = true;
+			}
+
+			if(!Jump && lastJump)
+			{
+				JumpReleased = true;
+			}	
+
 		}
 
 		#endregion // BaseGameSystem
@@ -207,11 +236,16 @@ namespace JJ26.Input
 
 		private InputAction inputAction_Confirm;
 		private InputAction inputAction_Cancel;
+		private InputAction inputAction_Walk;
+		private InputAction inputAction_Jump;
 
 		private void SetUpActions()
 		{
 			inputAction_Cancel = _playerInput.actions["UI/Cancel"];
 			inputAction_Confirm = _playerInput.actions["UI/Confirm"];
+
+			inputAction_Walk = _playerInput.actions["Player/Walk"];
+			inputAction_Jump = _playerInput.actions["Player/Jump"];
 		}
 
 		public void Clear()
