@@ -1,17 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 using JJ26.Framework;
 
 namespace JJ26.UI
 {
-    public class PressStartUISystem : BaseGameSystem, IUISystem
-    {
+	public class CreditsUISystem : BaseGameSystem, IUISystem
+	{
 		#region IUISystem
-
 		public UIController Controller => _controller;
 
 		public void SetActive(bool active)
 		{
-			if(!_isInitialised) { return; }
+			if (!_isInitialised) { return; }
 			_controller.SetActive(active);
 			_active = active;
 		}
@@ -40,7 +40,7 @@ namespace JJ26.UI
 			uiRoot.transform.position = Vector3.zero;
 			uiRoot.transform.rotation = Quaternion.identity;
 			uiRoot.transform.localScale = Vector3.one;
-			_controller = uiRoot.GetComponent<PressStartUIController>();
+			_controller = uiRoot.GetComponent<CreditsUIController>();
 			_controller.Initialise();
 			_controller.SetActive(false);
 		}
@@ -55,26 +55,11 @@ namespace JJ26.UI
 
 		[SerializeField] GameObject _uiPrefab;
 
-		private PressStartUIController _controller;
+		private static CreditsUIController _controller;
 		private bool _active = false;
 		public bool Active => _active;
 
 		#region InputSignals
-
-		public void Input_StartButtonPress()
-		{
-			UIStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
-		}
-
-		public void Input_CreditsButtonPress()
-		{
-			UIStateSystem.EnterScreen(UIStateSystem.EUIState.Credits);
-		}
-
-		public void Input_QuitButtonPress()
-		{
-			UIStateSystem.QuitToDesktop();
-		}
 
 		#endregion //InputSignals
 	}

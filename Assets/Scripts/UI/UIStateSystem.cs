@@ -19,6 +19,7 @@ namespace JJ26.UI
 			MainMenu,
 			Lobby,
 			Gameplay,
+			Credits,
 
 			Max
 		}
@@ -45,6 +46,8 @@ namespace JJ26.UI
 					return FindAnyObjectByType(typeof(LobbyUISystem)) as LobbyUISystem;
 				case EUIState.Gameplay:
 					return FindAnyObjectByType(typeof(GameplayUISystem)) as GameplayUISystem;
+				case EUIState.Credits:
+					return FindAnyObjectByType(typeof(CreditsUISystem)) as CreditsUISystem;
 				default:
 					Debug.LogWarning("[UI] No UI System found for UI State " + state.ToString());
 					return null;
