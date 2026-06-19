@@ -22,6 +22,7 @@ namespace JJ26.UI
 		public string DisplayName => _displayName;
 
 		private const string _playerPrefsNameKey = "PlayerName";
+		private const string _playerPrefsIPKey = "PlayerIP";
 
 		private GameNetworkManager _networkManager;
 
@@ -41,15 +42,22 @@ namespace JJ26.UI
 			_networkManager.OnClientDisconnected += HandleClientDisconnected;
 
 
-			InitialiseInputField();
+			InitialiseInputFields();
 			RefreshConfirmNameActive();
 			RefreshConfirmIPActive();
 		}
 
-		private void InitialiseInputField()
+		private void InitialiseInputFields()
 		{
-			if(!PlayerPrefs.HasKey(_playerPrefsNameKey)) { return; }
-			_nameInputField.text = PlayerPrefs.GetString(_playerPrefsNameKey);
+			if(PlayerPrefs.HasKey(_playerPrefsNameKey))
+			{
+				_nameInputField.text = PlayerPrefs.GetString(_playerPrefsNameKey);
+			}
+			
+			if(PlayerPrefs.HasKey(_playerPrefsIPKey))
+			{
+				_ipInputField.text = PlayerPrefs.GetString(_playerPrefsIPKey);
+			}
 		}
 
 		public void SavePlayerName()
@@ -58,6 +66,13 @@ namespace JJ26.UI
 
 			_displayName = _nameInputField.text;
 			PlayerPrefs.SetString(_playerPrefsNameKey, _displayName);
+		}
+
+		public void SaveEnteredIP()
+		{
+			Debug.Log("Saving IP address " + _ipInputField.text);
+
+			PlayerPrefs.SetString(_playerPrefsIPKey, _ipInputField.text);
 		}
 
 		public override void SetActive(bool active)
@@ -121,7 +136,7 @@ namespace JJ26.UI
 		{
 			string ipText = _ipInputField.text;
 			if (string.IsNullOrEmpty(ipText)) { return; }
-
+			SaveEnteredIP();
 			_confirmIPButton.interactable = false;
 			_networkManager.networkAddress = ipText;
 			_networkManager.StartClient();
