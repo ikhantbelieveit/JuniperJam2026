@@ -24,8 +24,6 @@ namespace JJ26.UI
 		private const string _playerPrefsNameKey = "PlayerName";
 		private const string _playerPrefsIPKey = "PlayerIP";
 
-		private GameNetworkManager _networkManager;
-
 
 		#region UIController
 
@@ -33,18 +31,34 @@ namespace JJ26.UI
 		{
 			base.Initialise();
 
-			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
+			GameNetworkManager.Instance.OnClientConnected -= HandleClientConnected;
+			GameNetworkManager.Instance.OnClientDisconnected -= HandleClientDisconnected;
 
-			_networkManager.OnClientConnected -= HandleClientConnected;
-			_networkManager.OnClientDisconnected -= HandleClientDisconnected;
-
-			_networkManager.OnClientConnected += HandleClientConnected;
-			_networkManager.OnClientDisconnected += HandleClientDisconnected;
+			GameNetworkManager.Instance.OnClientConnected += HandleClientConnected;
+			GameNetworkManager.Instance.OnClientDisconnected += HandleClientDisconnected;
 
 
 			InitialiseInputFields();
 			RefreshConfirmNameActive();
 			RefreshConfirmIPActive();
+		}
+
+		public override void SetActive(bool active)
+		{
+			base.SetActive(active);
+
+			if(active)
+			{
+				GameNetworkManager.Instance.OnClientConnected -= HandleClientConnected;
+				GameNetworkManager.Instance.OnClientDisconnected -= HandleClientDisconnected;
+
+				GameNetworkManager.Instance.OnClientConnected += HandleClientConnected;
+				GameNetworkManager.Instance.OnClientDisconnected += HandleClientDisconnected;
+			}
+
+			_nameInputPanelGO.SetActive(true);
+			_buttonRootGO.SetActive(false);
+			_ipInputPanelGO.SetActive(false);
 		}
 
 		private void InitialiseInputFields()
@@ -73,14 +87,6 @@ namespace JJ26.UI
 			Debug.Log("Saving IP address " + _ipInputField.text);
 
 			PlayerPrefs.SetString(_playerPrefsIPKey, _ipInputField.text);
-		}
-
-		public override void SetActive(bool active)
-		{
-			base.SetActive(active);
-			_nameInputPanelGO.SetActive(true);
-			_buttonRootGO.SetActive(false);
-			_ipInputPanelGO.SetActive(false);
 		}
 
 		public override void UpdateController()
@@ -138,14 +144,14 @@ namespace JJ26.UI
 			if (string.IsNullOrEmpty(ipText)) { return; }
 			SaveEnteredIP();
 			_confirmIPButton.interactable = false;
-			_networkManager.networkAddress = ipText;
-			_networkManager.StartClient();
+			GameNetworkManager.Instance.networkAddress = ipText;
+			GameNetworkManager.Instance.StartClient();
 		}
 
 
 		public void Input_HostLobbyPressed()
 		{
-			_networkManager.StartHost();
+			GameNetworkManager.Instance.StartHost();
 			_buttonRootGO.SetActive(false);
 			//go to lobby screen
 			Debug.Log("go to lobby screen");

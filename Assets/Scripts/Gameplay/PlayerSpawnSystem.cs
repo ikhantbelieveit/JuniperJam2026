@@ -41,6 +41,7 @@ namespace JJ26.Gameplay
 
 		public void OnLevelStarted()
 		{
+			Debug.Log("Execute OnLevelStarted in Spawn System");
 			PlayerSpawnPoint[] spawnPoints = FindObjectsByType<PlayerSpawnPoint>();
 			foreach(var spawnPoint in spawnPoints)
 			{
@@ -50,6 +51,7 @@ namespace JJ26.Gameplay
 
 		public void OnLevelExited()
 		{
+			Debug.Log("Execute OnLevelExited in Spawn System");
 			ResetSystem();
 		}
 

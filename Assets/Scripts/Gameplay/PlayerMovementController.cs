@@ -26,20 +26,11 @@ namespace JJ26.Gameplay
 		[SerializeField, Range(0f, 50f)] float _maxVelocity = 5;
 
 		[SerializeField, Range(0f, 50f)] float _maxAcceleration = 5;
-		[SerializeField, Range(0f, 50f)] float _maxAirAcceleration = 1;
 		[SerializeField, Range(0f, 50f)] float _maxTurnAcceleration = 5;
 
 		[SerializeField, Range(0f, 20f)] float _jumpHeight = 5;
 
-		[SerializeField, Range(0f, 90f)] float _maxGroundAngle = 25f;
-
 		[SerializeField, Range(0, 5)] int _maxMidairJumps = 1;
-
-		[SerializeField, Range(0f, 100f)] float _maxGroundSnapSpeed = 75f;
-
-		[SerializeField, Min(0f)] float _groundCheckDistance = 1f;
-
-		[SerializeField] LayerMask _groundCheckMask = -1;
 
 		[SerializeField] Rigidbody _rb;
 

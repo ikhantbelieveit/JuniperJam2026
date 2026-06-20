@@ -9,26 +9,39 @@ namespace JJ26.Network
         [SyncVar]
         private string _displayName = "Loading...";
 
-		private GameNetworkManager _networkManager => NetworkManager.singleton as GameNetworkManager;
+		[SyncVar]
+		private bool _isLeader;
+		public bool IsLeader => _isLeader;
 
 		public override void OnStartClient()
 		{
 			base.OnStartClient();
 
 			DontDestroyOnLoad(gameObject);
-			_networkManager.GamePlayers.Add(this);
+			GameNetworkManager.Instance.GamePlayers.Add(this);
 		}
 
 		public void OnDestroy()
 		{
-			if (!_networkManager) { return; }
-			_networkManager.GamePlayers.Remove(this);
+			GameNetworkManager.Instance.GamePlayers.Remove(this);
 		}
 
 		[Server]
 		public void SetDisplayName(string name)
 		{
 			_displayName = name;
+		}
+
+		[Server]
+		public void SetIsLeader(bool isLeader)
+		{
+			_isLeader = isLeader;
+		}
+
+		[Command]
+		public void CmdExitGame()
+		{
+			GameNetworkManager.Instance.ExitGame();
 		}
 	}
 }

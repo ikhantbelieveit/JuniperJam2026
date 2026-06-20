@@ -25,8 +25,6 @@ namespace JJ26.Network
             }
 		}
 
-		private GameNetworkManager _networkManager => NetworkManager.singleton as GameNetworkManager;
-
 		public void HandleReadyStatusChanged(bool oldValue, bool newValue) => RefreshLobbyDisplay();
 		public void HandleDisplayNameChanged(string oldValue, string newValue) => RefreshLobbyDisplay();
 
@@ -48,14 +46,12 @@ namespace JJ26.Network
 		{
 			base.OnStartClient();
 
-			_networkManager.LobbyPlayers.Add(this);
+			GameNetworkManager.Instance.LobbyPlayers.Add(this);
 		}
 
 		public void OnDestroy()
 		{
-			if(!_networkManager) { return; }
-
-			_networkManager.LobbyPlayers.Remove(this);
+			GameNetworkManager.Instance?.LobbyPlayers.Remove(this);
 			RefreshLobbyDisplay();
 		}
 
@@ -63,7 +59,7 @@ namespace JJ26.Network
 		{
 			if(!authority)
 			{
-				foreach(var player in _networkManager.LobbyPlayers)
+				foreach(var player in GameNetworkManager.Instance.LobbyPlayers)
 				{
 					if(player.authority)
 					{
@@ -85,20 +81,20 @@ namespace JJ26.Network
 		public void CmdSetReady(bool isReady)
 		{
 			IsReady = isReady;
-			_networkManager.UpdatePlayersOfReadyStatus();
+			GameNetworkManager.Instance.UpdatePlayersOfReadyStatus();
 		}
 
 		[Command]
 		public void CmdStartGame()
 		{
-			if(_networkManager.LobbyPlayers[0].connectionToClient != connectionToClient) { return; }
-			_networkManager.StartGame();
+			if(GameNetworkManager.Instance.LobbyPlayers[0].connectionToClient != connectionToClient) { return; }
+			GameNetworkManager.Instance.StartGame();
 		}
 
 		[Command]
 		public void CmdForceStartGame()
 		{
-			_networkManager.StartGame(true);
+			GameNetworkManager.Instance.StartGame(true);
 		}
 	}
 }

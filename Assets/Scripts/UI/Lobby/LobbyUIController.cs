@@ -20,20 +20,21 @@ namespace JJ26.UI
 		[SerializeField] List<TMP_Text> _playerReadyTexts;
 		[SerializeField] List<TMP_Text> _playerNotReadyTexts;
 
-		private GameNetworkManager _networkManager;
-
 		#region UIController
 
 		public override void Initialise()
 		{
 			base.Initialise();
 
-			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
 		}
 
 		public override void SetActive(bool active)
 		{
 			base.SetActive(active);
+
+			RefreshDisplay();
+			bool gameReady = GameNetworkManager.Instance.IsGameReady();
+			_startGameButton.gameObject.SetActive(gameReady);
 		}
 
 		public override void UpdateController()
@@ -57,14 +58,12 @@ namespace JJ26.UI
 				_playerNotReadyTexts[textIndex].gameObject.SetActive(false);
 			}
 
-			for(int playerIndex = 0; playerIndex < _networkManager.LobbyPlayers.Count; playerIndex++)
+			for(int playerIndex = 0; playerIndex < GameNetworkManager.Instance.LobbyPlayers.Count; playerIndex++)
 			{
-				var player = _networkManager.LobbyPlayers[playerIndex];
+				var player = GameNetworkManager.Instance.LobbyPlayers[playerIndex];
 				_playerNameTexts[playerIndex].text = player.DisplayName;
 				_playerReadyTexts[playerIndex].gameObject.SetActive(player.IsReady);
 				_playerNotReadyTexts[playerIndex].gameObject.SetActive(!player.IsReady);
-
-				Debug.Log("Setting UI of player " + playerIndex + " to isReady = " + player.IsReady.ToString());
 			}
 		}
 
@@ -87,20 +86,20 @@ namespace JJ26.UI
 
 		public void Input_UICancelPressed()
 		{
-			if(_networkManager.IsHosting())
+			if(GameNetworkManager.Instance.IsHostingInLobby())
 			{
-				_networkManager.StopHost();
+				GameNetworkManager.Instance.StopHost();
 				UIStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
 				return;
 			}
 
-			_networkManager.StopClient();
+			GameNetworkManager.Instance.StopClient();
 			UIStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
 		}
 
 		public void Input_ReadyButtonPressed()
 		{
-			PlayerLobbyData playerData = _networkManager.GetLocalPlayerData();
+			PlayerLobbyData playerData = GameNetworkManager.Instance.GetLocalPlayerData();
 			if(playerData)
 			{
 				playerData.CmdSetReady(!playerData.IsReady);
@@ -109,12 +108,12 @@ namespace JJ26.UI
 
 		public void Input_StartGameButtonPressed()
 		{
-			_networkManager.GetLocalPlayerData().CmdStartGame();
+			GameNetworkManager.Instance.GetLocalPlayerData().CmdStartGame();
 		}
 
 		public void Input_DebugStartButtonPressed()
 		{
-			_networkManager.GetLocalPlayerData().CmdForceStartGame();
+			GameNetworkManager.Instance.GetLocalPlayerData().CmdForceStartGame();
 		}
 
 		#endregion //InputSignals

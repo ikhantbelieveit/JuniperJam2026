@@ -40,6 +40,8 @@ namespace JJ26.Network
 
 		public static string CurrentSceneName => SceneManager.GetActiveScene().name;
 
+		public static GameNetworkManager Instance => singleton as GameNetworkManager;
+
 		public override void OnClientConnect()
 		{
 			base.OnClientConnect();
@@ -50,6 +52,12 @@ namespace JJ26.Network
 		public override void OnClientDisconnect()
 		{
 			base.OnClientDisconnect();
+
+			GamePlayers.Clear();
+			LobbyPlayers.Clear();
+
+			UIStateSystem.EnterScreen(UIStateSystem.EUIState.PressStart);
+			SceneManager.LoadScene("GameScene");
 
 			OnClientDisconnected?.Invoke();
 		}
@@ -62,6 +70,21 @@ namespace JJ26.Network
 				return;
 			}
 			base.OnServerConnect(conn);
+		}
+
+		public override void OnStartServer()
+		{
+			base.OnStartServer();
+			OnServerStarted?.Invoke();
+		}
+
+		public override void OnStopServer()
+		{
+			base.OnStopServer();
+			OnServerStopped?.Invoke();
+			Broadcast_OnLevelExited?.Invoke();
+			LobbyPlayers.Clear();
+			GamePlayers.Clear();
 		}
 
 		public override void OnServerAddPlayer(NetworkConnectionToClient conn)
@@ -77,15 +100,24 @@ namespace JJ26.Network
 		{
 			if(conn.identity != null)
 			{
-				var player = conn.identity.GetComponent<PlayerLobbyData>();
-				LobbyPlayers.Remove(player);
-				UpdatePlayersOfReadyStatus();
+				var lobbyPlayer = conn.identity.GetComponent<PlayerLobbyData>();
+				if(null != lobbyPlayer)
+				{
+					LobbyPlayers.Remove(lobbyPlayer);
+					UpdatePlayersOfReadyStatus();
+				}
+
+				var gamePlayer = conn.identity.GetComponent<PlayerGameData>();
+				if(null != gamePlayer)
+				{
+					GamePlayers.Remove(gamePlayer);
+				}
 			}
 
 			base.OnServerDisconnect(conn);
 		}
 
-		private bool IsGameReady()
+		public bool IsGameReady()
 		{
 			if(numPlayers < _minPlayers) { return false; }
 
@@ -106,17 +138,11 @@ namespace JJ26.Network
 			}
 		}
 
-		public override void OnStartServer()
+		public override void OnStopClient()
 		{
-			base.OnStartServer();
-			OnServerStarted?.Invoke();
-		}
-
-		public override void OnStopServer()
-		{
-			base.OnStopServer();
-			OnServerStopped?.Invoke();
+			base.OnStopClient();
 			LobbyPlayers.Clear();
+			GamePlayers.Clear();
 		}
 
 		public PlayerLobbyData GetLocalPlayerData()
@@ -129,9 +155,25 @@ namespace JJ26.Network
 			return foundPlayer;
 		}
 
-		public bool IsHosting()
+		public PlayerGameData GetLocalGameData()
+		{
+			PlayerGameData foundPlayer = null;
+			foreach (var player in GamePlayers)
+			{
+				if (player.isLocalPlayer) { foundPlayer = player; }
+			}
+			return foundPlayer;
+		}
+
+		public bool IsHostingInLobby()
 		{
 			var player = GetLocalPlayerData();
+			return null == player ? false : player.IsLeader;
+		}
+
+		public bool IsHostingInGame()
+		{
+			var player = GetLocalGameData();
 			return null == player ? false : player.IsLeader;
 		}
 
@@ -144,6 +186,13 @@ namespace JJ26.Network
 				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
 				ServerChangeScene("Level_Map_01");
 			}
+		}
+
+		[Server]
+		public void ExitGame()
+		{
+			StopHost();
+			
 		}
 
 		public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
@@ -165,6 +214,7 @@ namespace JJ26.Network
 					var connection = player.connectionToClient;
 					var gamePlayerInstance = Instantiate(_playerGameDataPrefab);
 					gamePlayerInstance.SetDisplayName(player.DisplayName);
+					gamePlayerInstance.SetIsLeader(player.IsLeader);
 
 					NetworkServer.Destroy(connection.identity.gameObject);
 					NetworkServer.ReplacePlayerForConnection(connection, gamePlayerInstance.gameObject, ReplacePlayerOptions.KeepAuthority);
@@ -202,7 +252,6 @@ namespace JJ26.Network
 
 		private bool CurrentlyInGameScene()
 		{
-			Debug.Log("Current scene name is " + CurrentSceneName);
 			return IsGameScene(CurrentSceneName);
 		}
 	}

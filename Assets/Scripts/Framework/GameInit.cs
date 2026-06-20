@@ -14,6 +14,12 @@ namespace JJ26.Framework
 
 		private void Start()
 		{
+            GameInit[] gameInits = FindObjectsByType<GameInit>();
+            if(gameInits.Length > 1)
+			{
+                Destroy(gameObject);
+                return;
+			}
             DontDestroyOnLoad(this);
             InitGame();
         }

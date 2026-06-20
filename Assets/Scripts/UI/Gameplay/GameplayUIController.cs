@@ -9,16 +9,12 @@ namespace JJ26.UI
 {
 	public class GameplayUIController : UIController
 	{
-
-		private GameNetworkManager _networkManager;
-
 		#region UIController
 
 		public override void Initialise()
 		{
 			base.Initialise();
 
-			_networkManager = FindAnyObjectByType(typeof(GameNetworkManager)) as GameNetworkManager;
 		}
 
 		public override void SetActive(bool active)
@@ -43,8 +39,11 @@ namespace JJ26.UI
 
 		public void UpdateInput()
 		{
-
+			if(InputSystem.UICancelPressed)
+			{
+				var gameData = GameNetworkManager.Instance.GetLocalGameData();
+				gameData.CmdExitGame();
+			}
 		}
 	}
 }
-
