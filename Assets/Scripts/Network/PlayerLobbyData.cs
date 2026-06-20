@@ -94,5 +94,11 @@ namespace JJ26.Network
 			if(_networkManager.LobbyPlayers[0].connectionToClient != connectionToClient) { return; }
 			_networkManager.StartGame();
 		}
+
+		[Command]
+		public void CmdForceStartGame()
+		{
+			_networkManager.StartGame(true);
+		}
 	}
 }

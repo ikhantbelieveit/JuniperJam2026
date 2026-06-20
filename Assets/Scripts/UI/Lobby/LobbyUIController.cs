@@ -89,7 +89,8 @@ namespace JJ26.UI
 		{
 			if(_networkManager.IsHosting())
 			{
-				//TODO: disconnect host and boot clients back to main menu
+				_networkManager.StopHost();
+				UIStateSystem.EnterScreen(UIStateSystem.EUIState.MainMenu);
 				return;
 			}
 
@@ -109,6 +110,11 @@ namespace JJ26.UI
 		public void Input_StartGameButtonPressed()
 		{
 			_networkManager.GetLocalPlayerData().CmdStartGame();
+		}
+
+		public void Input_DebugStartButtonPressed()
+		{
+			_networkManager.GetLocalPlayerData().CmdForceStartGame();
 		}
 
 		#endregion //InputSignals

@@ -193,7 +193,7 @@ MonoBehaviour:
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
-  offlineScene: Assets/Scenes/GameScene.unity
+  offlineScene: 
   onlineScene: 
   offlineSceneLoadDelay: 0
   transport: {fileID: 0}

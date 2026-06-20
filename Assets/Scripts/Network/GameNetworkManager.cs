@@ -135,11 +135,11 @@ namespace JJ26.Network
 			return null == player ? false : player.IsLeader;
 		}
 
-		public void StartGame()
+		public void StartGame(bool forceStart = false)
 		{
 			if(SceneManager.GetActiveScene().path == _gameScene)
 			{
-				if(!IsGameReady()) { return; }
+				if(!IsGameReady() && !forceStart) { return; }
 
 				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
 				ServerChangeScene("Level_Map_01");
