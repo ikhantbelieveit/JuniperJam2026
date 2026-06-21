@@ -10,7 +10,7 @@ float3 GerstnerWave(float4 wave, float3 inPos, inout float3 tangent, inout float
 	float t = _Time.y;
 
 	float k = 2.0 * 3.14159265 / wavelength;
-	float c = sqrt(9.8 / k);
+	float c = sqrt(9.81 / k);
 	float2 d = normalize(wave.xy);
 	float f = k * (dot(d, inPos.xz) - c * t);
 	float amplitude = steepness / k;

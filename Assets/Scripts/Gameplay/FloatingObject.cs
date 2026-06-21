@@ -1,28 +1,40 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace JJ26.Gameplay
 {
     public class FloatingObject : MonoBehaviour
     {
+		[SerializeField] WaveSystem _waveSystem;
+
 		[SerializeField] Rigidbody _rigidbody;
+		[SerializeField] List<Transform> _floatPoints;
+
 		public float DepthBeforeSubmerged = 1f;
 		public float DisplacementAmount = 3f;
-		public int FloatPointCount = 1;
+		//public int FloatPointCount = 1;
 		public float WaterDrag = 0.99f;
 		public float WaterAngularDrag = 0.5f;
 		public float GravityScale = 1;
 
 		private void FixedUpdate()
 		{
-			_rigidbody.AddForceAtPosition(Physics.gravity / FloatPointCount * GravityScale, transform.position, ForceMode.Acceleration);
+			float waveHeight = _waveSystem.SampleHeight(transform.position);
 
-			if(transform.position.y < 0f)
+			foreach(Transform point in _floatPoints)
 			{
-				float displacementMult = Mathf.Clamp01(-transform.position.y / DepthBeforeSubmerged) * DisplacementAmount;
-				_rigidbody.AddForce(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMult, 0f), ForceMode.Acceleration);
-				_rigidbody.AddForce(displacementMult * -_rigidbody.linearVelocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
-				_rigidbody.AddTorque(displacementMult * -_rigidbody.angularVelocity * WaterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+				_rigidbody.AddForceAtPosition(Physics.gravity / _floatPoints.Count * GravityScale, point.position, ForceMode.Acceleration);
+
+				if (point.position.y < waveHeight)
+				{
+					float displacementMult = Mathf.Clamp01((waveHeight - point.position.y) / DepthBeforeSubmerged) * DisplacementAmount;
+					_rigidbody.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y / _floatPoints.Count) * displacementMult, 0f), point.position, ForceMode.Acceleration);
+					_rigidbody.AddForce(displacementMult * -_rigidbody.linearVelocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+					_rigidbody.AddTorque(displacementMult * -_rigidbody.angularVelocity * WaterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+				}
 			}
+
+			
 		}
 	}
 }
