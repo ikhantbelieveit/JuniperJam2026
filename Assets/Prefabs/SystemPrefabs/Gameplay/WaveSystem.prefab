@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8229006222213680431}
-  - component: {fileID: 6308283852395041415}
+  - component: {fileID: 4908261523522956278}
   m_Layer: 0
-  m_Name: PlayerSpawnSystem
+  m_Name: WaveSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6308283852395041415
+--- !u!114 &4908261523522956278
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9105728283696904363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0008f98be2ca94941968566fe5cbbac6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4276aab13d6595d4a8085d434761ee4b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JJ26.Network.PlayerSpawnSystem
-  _playerPrefab: {fileID: 1917772671494148446, guid: a8f837dee081c0042a7211814c314f10, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSystem
+  WaveA:
+    Parameters: {x: 0.8, y: 0, z: 0.2, w: 30}
+  WaveB:
+    Parameters: {x: 0.7, y: 1, z: 0.1, w: 50}

@@ -5,7 +5,7 @@ namespace JJ26.Gameplay
 {
     public class FloatingObject : MonoBehaviour
     {
-		[SerializeField] WaveSystem _waveSystem;
+		private WaveSystem _waveSystem;
 
 		[SerializeField] Rigidbody _rigidbody;
 		[SerializeField] List<Transform> _floatPoints;
@@ -17,8 +17,17 @@ namespace JJ26.Gameplay
 		public float WaterAngularDrag = 0.5f;
 		public float GravityScale = 1;
 
+		public void Start()
+		{
+			_waveSystem = FindAnyObjectByType(typeof(WaveSystem)) as WaveSystem;
+		}
+
 		private void FixedUpdate()
 		{
+			if(!_waveSystem)
+			{
+				_waveSystem = FindAnyObjectByType(typeof(WaveSystem)) as WaveSystem;
+			}
 			float waveHeight = _waveSystem.SampleHeight(transform.position);
 
 			foreach(Transform point in _floatPoints)

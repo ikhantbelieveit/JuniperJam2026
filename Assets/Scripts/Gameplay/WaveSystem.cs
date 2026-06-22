@@ -1,8 +1,9 @@
 using UnityEngine;
+using JJ26.Framework;
 
 namespace JJ26.Gameplay
 {
-	public class WaveSystem : MonoBehaviour
+	public class WaveSystem : BaseGameSystem
 	{
 		[System.Serializable]
 		public struct Wave //X, Y = direction. Z = steepness. W = wavelength

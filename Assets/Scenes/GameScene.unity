@@ -208,6 +208,7 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 8724655233675050318, guid: b8ca67a3c4acd67489cf597215bf4ac4, type: 3}
   - {fileID: 2790167733135268694, guid: 3c0427c43bd030f42a2cfd1e87a1f7bd, type: 3}
+  - {fileID: 1917772671494148446, guid: a8f837dee081c0042a7211814c314f10, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -529,6 +530,7 @@ MonoBehaviour:
   - {fileID: 6308283852395041415, guid: eb3ff418322f6034c9a64ca8b0cc2697, type: 3}
   - {fileID: 5801341115596529471, guid: afedf164c6d930041a50e5f83522540c, type: 3}
   - {fileID: 7459389396193969276, guid: 875c570f96bb1fa48b2871aa24c54bdd, type: 3}
+  - {fileID: 4908261523522956278, guid: 28383a515bafb214fa4b0006381b3841, type: 3}
 --- !u!4 &1025435239
 Transform:
   m_ObjectHideFlags: 0
