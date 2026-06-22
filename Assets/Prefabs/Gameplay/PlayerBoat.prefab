@@ -143,10 +143,10 @@ MonoBehaviour:
   - {fileID: 1236662996783721230}
   - {fileID: 6459180365874163699}
   - {fileID: 3243096720651738604}
-  DepthBeforeSubmerged: 1
-  DisplacementAmount: 3
-  WaterDrag: 2
-  WaterAngularDrag: 0.5
+  DepthBeforeSubmerged: 1.2
+  DisplacementAmount: 3.5
+  WaterDrag: 0.7
+  WaterAngularDrag: 1
   GravityScale: 1
   RightingTorqueStrength: 20
 --- !u!114 &368332380390264673

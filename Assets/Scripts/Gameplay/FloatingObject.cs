@@ -28,17 +28,18 @@ namespace JJ26.Gameplay
 			{
 				_waveSystem = FindAnyObjectByType(typeof(WaveSystem)) as WaveSystem;
 			}
-			float waveHeight = _waveSystem.SampleHeight(transform.position);
 
 			foreach(Transform point in _floatPoints)
 			{
+				float pointHeight = _waveSystem.SampleHeight(point.position);
 				_rigidbody.AddForceAtPosition(Physics.gravity / _floatPoints.Count * GravityScale, point.position, ForceMode.Acceleration);
 
-				if (point.position.y < waveHeight)
+				if (point.position.y < pointHeight)
 				{
-					float displacementMult = Mathf.Clamp01((waveHeight - point.position.y) / DepthBeforeSubmerged) * DisplacementAmount;
+					float displacementMult = Mathf.Clamp01((pointHeight - point.position.y) / DepthBeforeSubmerged) * DisplacementAmount;
 					_rigidbody.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y / _floatPoints.Count) * displacementMult, 0f), point.position, ForceMode.Acceleration);
-					_rigidbody.AddForce(displacementMult * -_rigidbody.linearVelocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+					//_rigidbody.AddForce(displacementMult * -_rigidbody.linearVelocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+					_rigidbody.AddForce(-_rigidbody.linearVelocity * WaterDrag * displacementMult, ForceMode.Acceleration);
 					_rigidbody.AddTorque(-_rigidbody.angularVelocity * WaterAngularDrag, ForceMode.Acceleration);
 
 					Vector3 normal = _waveSystem.SampleNormal(point.position);
