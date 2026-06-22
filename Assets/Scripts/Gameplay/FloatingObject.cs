@@ -12,10 +12,10 @@ namespace JJ26.Gameplay
 
 		public float DepthBeforeSubmerged = 1f;
 		public float DisplacementAmount = 3f;
-		//public int FloatPointCount = 1;
 		public float WaterDrag = 0.99f;
 		public float WaterAngularDrag = 0.5f;
 		public float GravityScale = 1;
+		public float RightingTorqueStrength = 20f;
 
 		public void Start()
 		{
@@ -39,11 +39,14 @@ namespace JJ26.Gameplay
 					float displacementMult = Mathf.Clamp01((waveHeight - point.position.y) / DepthBeforeSubmerged) * DisplacementAmount;
 					_rigidbody.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y / _floatPoints.Count) * displacementMult, 0f), point.position, ForceMode.Acceleration);
 					_rigidbody.AddForce(displacementMult * -_rigidbody.linearVelocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
-					_rigidbody.AddTorque(displacementMult * -_rigidbody.angularVelocity * WaterAngularDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
+					_rigidbody.AddTorque(-_rigidbody.angularVelocity * WaterAngularDrag, ForceMode.Acceleration);
+
+					Vector3 normal = _waveSystem.SampleNormal(point.position);
+					Vector3 torqueAxis = Vector3.Cross(transform.up, normal);
+					_rigidbody.AddTorque(torqueAxis * RightingTorqueStrength * displacementMult, ForceMode.Acceleration);
+
 				}
 			}
-
-			
 		}
 	}
 }

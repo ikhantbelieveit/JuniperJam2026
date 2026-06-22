@@ -50,6 +50,8 @@ GameObject:
   - component: {fileID: 368332380390264673}
   - component: {fileID: 5293152978494694617}
   - component: {fileID: -1021026664011970303}
+  - component: {fileID: 8296677336257144695}
+  - component: {fileID: 4674317924213079079}
   m_Layer: 0
   m_Name: PlayerBoat
   m_TagString: Untagged
@@ -72,6 +74,7 @@ Transform:
   m_Children:
   - {fileID: 5619823927731780950}
   - {fileID: 434039698441476019}
+  - {fileID: 2699950851782925323}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2006776487042411642
@@ -142,9 +145,10 @@ MonoBehaviour:
   - {fileID: 3243096720651738604}
   DepthBeforeSubmerged: 1
   DisplacementAmount: 3
-  WaterDrag: 0.99
-  WaterAngularDrag: 0.1
+  WaterDrag: 2
+  WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!114 &368332380390264673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +234,41 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &8296677336257144695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917772671494148446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084d7bc76b6ef9345af018b9e060b581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JJ26.Gameplay.PlayerCameraController
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _cameraTarget: {fileID: 2699950851782925323}
+  _playerTransform: {fileID: 4908560977731316807}
+--- !u!114 &4674317924213079079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917772671494148446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073792d4b935dc542a7c4aa03a40b6bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBoatController
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _rb: {fileID: 6789189890968423311}
+  _speedMult: 40
+  _steeringPower: 7
 --- !u!1 &1956899714171711137
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,3 +483,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 434039698441476019}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9102485416087377216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2699950851782925323}
+  m_Layer: 0
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2699950851782925323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102485416087377216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
+  m_LocalPosition: {x: 0, y: 3, z: -6.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4908560977731316807}
+  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}

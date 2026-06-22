@@ -39,6 +39,17 @@ namespace JJ26.Gameplay
 			return SampleDisplacement(worldPos).y;
 		}
 
+		public Vector3 SampleNormal(Vector3 worldPos)
+		{
+			Vector3 tangent = Vector3.right;
+			Vector3 birnomal = Vector3.forward;
+
+			GerstnerWaveNormal(WaveA.Parameters, worldPos, ref tangent, ref birnomal);
+			GerstnerWaveNormal(WaveB.Parameters, worldPos, ref tangent, ref birnomal);
+
+			return Vector3.Cross(birnomal, tangent).normalized;
+		}
+
 		public Vector3 GetWavePosition(Vector3 worldPos)
 		{
 			return worldPos + SampleDisplacement(worldPos);
@@ -69,6 +80,37 @@ namespace JJ26.Gameplay
 				d.x * (amplitude * Mathf.Cos(f)),
 				amplitude * Mathf.Sin(f),
 				d.y * (amplitude * Mathf.Cos(f)));
+		}
+
+		private void GerstnerWaveNormal(Vector4 wave, Vector3 worldPos, ref Vector3 tangent, ref Vector3 binormal)
+		{
+			float steepness = wave.z;
+			float wavelength = wave.w;
+
+			float k = 2.0f * _pi / wavelength;
+			float c = Mathf.Sqrt(_gravity / k);
+			Vector2 d = new Vector2(wave.x, wave.y).normalized;
+
+			Vector3 p = worldPos;
+
+			p.x /= OCEAN_SCALE_X;
+			p.z /= OCEAN_SCALE_Z;
+
+			float f = k * (Vector2.Dot(
+					d,
+					new Vector2(p.x, p.z)
+				) - c * Time.time);
+
+			tangent += new Vector3(
+				-d.x * d.x * steepness * Mathf.Sin(f),
+				d.x * steepness * Mathf.Cos(f),
+				-d.x * d.y * steepness * Mathf.Sin(f));
+
+			binormal += new Vector3(
+				-d.x * d.y * steepness * Mathf.Sin(f),
+				d.y * steepness * Mathf.Cos(f),
+				-d.y * d.y * steepness * Mathf.Sin(f));
+
 		}
 	}
 }
