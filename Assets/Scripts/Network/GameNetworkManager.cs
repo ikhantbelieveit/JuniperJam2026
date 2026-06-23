@@ -38,6 +38,9 @@ namespace JJ26.Network
 		public static event LevelEvent Broadcast_OnLevelStarted;
 		public static event LevelEvent Broadcast_OnLevelExited;
 
+		public delegate void GameDataEvent();
+		public event GameDataEvent OnAllGameDataReady;
+
 		public static string CurrentSceneName => SceneManager.GetActiveScene().name;
 
 		public static GameNetworkManager Instance => singleton as GameNetworkManager;
@@ -253,6 +256,16 @@ namespace JJ26.Network
 		private bool CurrentlyInGameScene()
 		{
 			return IsGameScene(CurrentSceneName);
+		}
+
+		public void OnPlayerGameDataStart(PlayerGameData gameData)
+		{
+			GamePlayers.Add(gameData);
+
+			if(GamePlayers.Count >= numPlayers)
+			{
+				OnAllGameDataReady?.Invoke();
+			}
 		}
 	}
 }

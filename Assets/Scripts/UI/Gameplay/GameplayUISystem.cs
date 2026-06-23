@@ -32,6 +32,8 @@ namespace JJ26.UI
 		{
 			base.SetCallbacks();
 
+			GameNetworkManager.Instance.OnAllGameDataReady -= OnAllGameDataReady;
+			GameNetworkManager.Instance.OnAllGameDataReady += OnAllGameDataReady;
 		}
 
 		private void InitialiseController()
@@ -65,6 +67,11 @@ namespace JJ26.UI
 		private static GameplayUIController _controller;
 		private bool _active = false;
 		public bool Active => _active;
+
+		public void OnAllGameDataReady()
+		{
+			_controller.OnAllGameDataReady();
+		}
 
 		#region InputSignals
 

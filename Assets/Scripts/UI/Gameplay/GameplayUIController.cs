@@ -25,12 +25,6 @@ namespace JJ26.UI
 		public override void SetActive(bool active)
 		{
 			base.SetActive(active);
-
-			if(active)
-			{
-				Debug.Log("Set GameplayUIController active");
-				OnLevelStarted();
-			}
 		}
 
 		public override void UpdateController()
@@ -45,12 +39,9 @@ namespace JJ26.UI
 			UpdateInput();
 		}
 
-
-		#endregion //UIController
-
-		public void OnLevelStarted()
+		public void OnAllGameDataReady()
 		{
-			foreach(var display in _scoreDisplays)
+			foreach (var display in _scoreDisplays)
 			{
 				display.gameObject.SetActive(false);
 			}
@@ -67,6 +58,9 @@ namespace JJ26.UI
 				Debug.Log("Setting score display active");
 			}
 		}
+
+
+		#endregion //UIController
 
 		public void UpdateInput()
 		{

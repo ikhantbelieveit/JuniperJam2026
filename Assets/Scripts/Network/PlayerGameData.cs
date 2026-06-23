@@ -23,7 +23,7 @@ namespace JJ26.Network
 			base.OnStartClient();
 
 			DontDestroyOnLoad(gameObject);
-			GameNetworkManager.Instance.GamePlayers.Add(this);
+			GameNetworkManager.Instance.OnPlayerGameDataStart(this);
 		}
 
 		public void OnDestroy()
