@@ -9,6 +9,9 @@ namespace JJ26.UI
 {
 	public class GameplayUIController : UIController
 	{
+
+		[SerializeField] List<PlayerScoreDisplay> _scoreDisplays;
+
 		#region UIController
 
 		public override void Initialise()
@@ -36,6 +39,22 @@ namespace JJ26.UI
 
 
 		#endregion //UIController
+
+		public void OnLevelStarted()
+		{
+			foreach(var display in _scoreDisplays)
+			{
+				display.gameObject.SetActive(false);
+			}
+
+			List<PlayerGameData> gameData = GameNetworkManager.Instance.GamePlayers;
+
+			for(int index = 0; index < gameData.Count; ++index)
+			{
+				_scoreDisplays[index].gameObject.SetActive(true);
+				_scoreDisplays[index].Initialise(gameData[index]);
+			}
+		}
 
 		public void UpdateInput()
 		{

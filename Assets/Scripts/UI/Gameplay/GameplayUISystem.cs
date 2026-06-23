@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using JJ26.Framework;
+using JJ26.Network;
 
 namespace JJ26.UI
 {
@@ -25,6 +26,14 @@ namespace JJ26.UI
 			base.Initialise();
 
 			InitialiseController();
+		}
+
+		public override void SetCallbacks()
+		{
+			base.SetCallbacks();
+
+			GameNetworkManager.Broadcast_OnLevelStarted -= OnLevelStarted;
+			GameNetworkManager.Broadcast_OnLevelStarted += OnLevelStarted;
 		}
 
 		private void InitialiseController()
@@ -58,6 +67,11 @@ namespace JJ26.UI
 		private static GameplayUIController _controller;
 		private bool _active = false;
 		public bool Active => _active;
+
+		private void OnLevelStarted()
+		{
+			_controller.OnLevelStarted();
+		}
 
 		#region InputSignals
 
