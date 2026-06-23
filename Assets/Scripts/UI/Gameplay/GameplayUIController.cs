@@ -12,8 +12,6 @@ namespace JJ26.UI
 
 		[SerializeField] List<PlayerScoreDisplay> _scoreDisplays;
 
-		[SerializeField] TMP_Text _gameDataCountText;
-
 		#region UIController
 
 		public override void Initialise()
@@ -48,14 +46,10 @@ namespace JJ26.UI
 
 			List<PlayerGameData> gameData = GameNetworkManager.Instance.GamePlayers;
 
-			Debug.Log("Game data count: " + gameData.Count);
-			_gameDataCountText.text = gameData.Count.ToString();
-
 			for (int index = 0; index < gameData.Count; ++index)
 			{
 				_scoreDisplays[index].gameObject.SetActive(true);
 				_scoreDisplays[index].Initialise(gameData[index]);
-				Debug.Log("Setting score display active");
 			}
 		}
 
