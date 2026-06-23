@@ -9,7 +9,7 @@ namespace JJ26.Gameplay
 
         private float _smoothSpeed = 10f;
 
-		private void LateUpdate()
+		private void FixedUpdate()
 		{
 			if(null == _cameraTarget ||
 				null == _playerTransform) { return; }
@@ -17,7 +17,7 @@ namespace JJ26.Gameplay
 			transform.position = Vector3.Lerp(
 				transform.position,
 				_cameraTarget.position,
-				_smoothSpeed * Time.deltaTime);
+				_smoothSpeed * Time.fixedDeltaTime);
 
 			transform.LookAt(_playerTransform.position);
 		}
