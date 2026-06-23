@@ -53,6 +53,16 @@ namespace JJ26.UI
 			}
 		}
 
+		public void RefreshScoreValues()
+		{
+			List<PlayerGameData> gameData = GameNetworkManager.Instance.GamePlayers;
+
+			for (int index = 0; index < gameData.Count; ++index)
+			{
+				_scoreDisplays[index].SetScoreText(gameData[index].Score);
+			}
+		}
+
 
 		#endregion //UIController
 

@@ -14,9 +14,15 @@ namespace JJ26.Network
 		private bool _isLeader;
 		public bool IsLeader => _isLeader;
 
-		[SyncVar]
+		[SyncVar(hook = nameof(HandleScoreChanged))]
 		private float _score;
 		public float Score => _score;
+
+		public void HandleScoreChanged(float oldValue, float newValue)
+		{
+			var gameplayUI = FindAnyObjectByType(typeof(GameplayUIController)) as GameplayUIController;
+			gameplayUI.RefreshScoreValues();
+		}
 
 		public override void OnStartClient()
 		{

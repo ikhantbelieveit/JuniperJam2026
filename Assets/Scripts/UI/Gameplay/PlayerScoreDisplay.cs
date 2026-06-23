@@ -12,6 +12,13 @@ namespace JJ26.UI
         public void Initialise(PlayerGameData data)
 		{
             _nameText.text = data.DisplayName;
+            SetScoreText(0);
+		}
+
+        public void SetScoreText(float score)
+		{
+            var roundedScore = string.Format("{0:C}", score);
+            _scoreText.text = roundedScore.ToString();
 		}
     }
 }

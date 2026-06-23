@@ -11,8 +11,8 @@ TagManager:
   - PlayerActor
   - Water
   - UI
-  - 
-  - 
+  - PlayerCollect
+  - CollectItem
   - 
   - 
   - 
