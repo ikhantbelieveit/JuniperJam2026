@@ -109,10 +109,10 @@ MonoBehaviour:
   _rigidbody: {fileID: 488577937900836284}
   _floatPoints:
   - {fileID: 6256875945296103119}
-  DepthBeforeSubmerged: 0
-  DisplacementAmount: 3
+  DepthBeforeSubmerged: 0.25
+  DisplacementAmount: 1.5
   WaterDrag: 0.99
-  WaterAngularDrag: 0.5
+  WaterAngularDrag: 2
   GravityScale: 1
   RightingTorqueStrength: 20
 --- !u!54 &488577937900836284
