@@ -318,6 +318,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.1
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &209142161
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -486,6 +487,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &224651945
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -651,6 +653,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!65 &240572079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -846,6 +849,7 @@ MonoBehaviour:
   WaterDrag: 5
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &288750843
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -960,7 +964,7 @@ Transform:
   m_GameObject: {fileID: 288750841}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.15, y: 0, z: 1.35}
+  m_LocalPosition: {x: -12.89, y: 0, z: 29.64}
   m_LocalScale: {x: 5, y: 2.5, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1750,6 +1754,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.01
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &853799927
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2203,6 +2208,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &945519354
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2619,6 +2625,7 @@ MonoBehaviour:
   WaterDrag: 0.5
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &1256378663
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2880,6 +2887,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.1
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &1484715630
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3079,6 +3087,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.1
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &1565965161
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3302,6 +3311,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!65 &1613155526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3532,6 +3542,7 @@ MonoBehaviour:
   WaterDrag: 0.99
   WaterAngularDrag: 0.5
   GravityScale: 1
+  RightingTorqueStrength: 20
 --- !u!54 &1811880282
 Rigidbody:
   m_ObjectHideFlags: 0
