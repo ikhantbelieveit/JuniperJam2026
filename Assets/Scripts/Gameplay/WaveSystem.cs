@@ -21,8 +21,8 @@ namespace JJ26.Gameplay
 		const float _gravity = 9.81f;
 		const float _pi = 3.14159265f;
 
-		public const float OCEAN_SCALE_X = 50f;
-		public const float OCEAN_SCALE_Z = 50f;
+		public float OCEAN_SCALE_X = 1f;
+		public float OCEAN_SCALE_Z = 1f;
 
 		public Vector3 SampleDisplacement(Vector3 worldPos)
 		{
@@ -31,12 +31,15 @@ namespace JJ26.Gameplay
 			displacement += GerstnerWave(WaveA.Parameters, worldPos);
 			displacement += GerstnerWave(WaveB.Parameters, worldPos);
 
-			return displacement;
+			displacement.x /= OCEAN_SCALE_X;
+			displacement.z /= OCEAN_SCALE_Z;
+
+            return displacement;
 		}
 
 		public float SampleHeight(Vector3 worldPos)
 		{
-			return SampleDisplacement(worldPos).y;
+            return SampleDisplacement(worldPos).y;
 		}
 
 		public Vector3 SampleNormal(Vector3 worldPos)
@@ -66,10 +69,13 @@ namespace JJ26.Gameplay
 
 			Vector3 p = worldPos;
 
-			p.x /= OCEAN_SCALE_X;
-			p.z /= OCEAN_SCALE_Z;
+			//p.x /= OCEAN_SCALE_X;
+			//p.x = p.x / OCEAN_SCALE_X;
+            //p.z = p.z / OCEAN_SCALE_Z;
 
-			float f = k * (Vector2.Dot(
+            //p.z /= OCEAN_SCALE_Z;
+
+            float f = k * (Vector2.Dot(
 					d,
 					new Vector2(p.x, p.z)
 				) - c * Time.time);
