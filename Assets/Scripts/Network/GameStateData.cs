@@ -15,16 +15,28 @@ namespace JJ26.Network
     {
         [SerializeField] float _matchDuration = 60f;
         [SerializeField] float _countdownDuration = 5f;
+        [SerializeField] float _postMatchDuration = 10f;
 
         [SyncVar] public float MatchTimeRemaining;
         [SyncVar] public float CountdownTimeRemaining;
+        [SyncVar] public float PostMatchTimeRemaining;
 
         [SyncVar] public EGameState CurrentState;
 
         public delegate void GameStateEvent(EGameState state);
         public event GameStateEvent OnGameStateChanged;
 
-        [Server]
+		public override void OnStartClient()
+		{
+			base.OnStartClient();
+
+            if(null == GameNetworkManager.Instance.GameState)
+			{
+                GameNetworkManager.Instance.SetGameState(this);
+            }
+		}
+
+		[Server]
         void BeginCountdown()
 		{
             CountdownTimeRemaining = _countdownDuration;
@@ -34,6 +46,12 @@ namespace JJ26.Network
         void BeginMatchTime()
 		{
             MatchTimeRemaining = _matchDuration;
+		}
+
+        [Server]
+        void BeginPostMatch()
+		{
+            PostMatchTimeRemaining = _postMatchDuration;
 		}
 
 
@@ -54,7 +72,7 @@ namespace JJ26.Network
                     break;
                 case EGameState.PostMatch:
                     Debug.Log("Set state to PostMatch");
-                    GameNetworkManager.Instance.ExitGame();
+                    BeginPostMatch();
                     break;
 			}
             OnGameStateChanged?.Invoke(CurrentState);
@@ -102,7 +120,12 @@ namespace JJ26.Network
         [Server]
         void UpdatePostMatch()
 		{
-
-		}
+            if (PostMatchTimeRemaining <= 0) { return; }
+            PostMatchTimeRemaining -= Time.deltaTime;
+            if (PostMatchTimeRemaining <= 0)
+            {
+                GameNetworkManager.Instance.ExitGame();
+            }
+        }
 	}
 }

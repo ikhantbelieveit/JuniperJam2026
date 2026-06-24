@@ -3,6 +3,7 @@ using JJ26.Network;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections.Generic;
 
 namespace JJ26.UI
@@ -11,6 +12,23 @@ namespace JJ26.UI
 	{
 
 		[SerializeField] List<PlayerScoreDisplay> _scoreDisplays;
+
+		[SerializeField] TMP_Text _countdownText;
+		[SerializeField] TMP_Text _matchTimeText;
+		[SerializeField] TMP_Text _returnTimeText;
+
+		[SerializeField] GameObject _countdownTextGO;
+		[SerializeField] GameObject _matchTimeTextGO;
+
+		[SerializeField] Color _countdownColour3 = Color.red;
+		[SerializeField] Color _countdownColour2 = Color.orange;
+		[SerializeField] Color _countdownColour1 = Color.yellow;
+		[SerializeField] Color _countdownColourGo = Color.green;
+
+		[SerializeField] GameObject _speedWheelGO;
+		[SerializeField] GameObject _directionWheelGO;
+
+		[SerializeField] GameObject _postMatchGO;
 
 		#region UIController
 
@@ -23,6 +41,11 @@ namespace JJ26.UI
 		public override void SetActive(bool active)
 		{
 			base.SetActive(active);
+
+			if(active)
+			{
+				RefreshActiveObjectsForState();
+			}
 		}
 
 		public override void UpdateController()
@@ -34,8 +57,64 @@ namespace JJ26.UI
 
 			base.UpdateController();
 
+			RefreshActiveObjectsForState();
+
+			switch (GameNetworkManager.Instance.GameState?.CurrentState)
+			{
+				case EGameState.Countdown:
+					int roundedTime = (int)GameNetworkManager.Instance.GameState.CountdownTimeRemaining;
+					_countdownText.SetText(roundedTime.ToString());
+					switch(roundedTime)
+					{
+						default:
+							_countdownText.color = _countdownColour3;
+							break;
+						case 2:
+							_countdownText.color = _countdownColour2;
+							break;
+						case 1:
+							_countdownText.color = _countdownColour1;
+							break;
+						case 0:
+							_countdownText.color = _countdownColourGo;
+							_countdownText.SetText("GO!");
+							break;
+					}
+					break;
+				case EGameState.Gameplay:
+					float time = GameNetworkManager.Instance.GameState.MatchTimeRemaining;
+					TimeSpan t = TimeSpan.FromSeconds(time);
+					string display = $"{t.Minutes:00}:{t.Seconds:00}";
+
+					_matchTimeText.SetText(display);
+					break;
+				case EGameState.PostMatch:
+					int roundedTimePostMatch = (int)GameNetworkManager.Instance.GameState.PostMatchTimeRemaining;
+					_returnTimeText.SetText("Return in: " + roundedTimePostMatch.ToString());
+					break;
+			}
+
 			UpdateInput();
 		}
+
+		void RefreshActiveObjectsForState()
+		{
+			if(null == GameNetworkManager.Instance.GameState)
+			{
+				_countdownTextGO.SetActive(true);
+				_matchTimeTextGO.SetActive(false);
+				_speedWheelGO.SetActive(false);
+				_directionWheelGO.SetActive(false);
+				_postMatchGO.SetActive(false);
+				return;
+			}
+			_countdownTextGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Countdown);
+			_matchTimeTextGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
+			_speedWheelGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
+			_directionWheelGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
+			_postMatchGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.PostMatch);
+		}
+
 
 		public void OnAllGameDataReady()
 		{

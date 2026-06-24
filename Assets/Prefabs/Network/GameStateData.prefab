@@ -65,3 +65,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _matchDuration: 45
+  _countdownDuration: 3.99
+  _postMatchDuration: 10
+  MatchTimeRemaining: 0
+  CountdownTimeRemaining: 0
+  PostMatchTimeRemaining: 0
+  CurrentState: 0

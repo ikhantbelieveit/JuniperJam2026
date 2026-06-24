@@ -258,8 +258,9 @@ namespace JJ26.Network
 
 			if(GamePlayers.Count >= numPlayers)
 			{
-				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
 				TrySpawnGameState();
+				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
+				
 				OnAllGameDataReady?.Invoke();
 			}
 		}
@@ -273,6 +274,11 @@ namespace JJ26.Network
 			NetworkServer.Spawn(GameState.gameObject);
 
 			GameState.SetGameState(EGameState.Countdown);
+		}
+
+		public void SetGameState(GameStateData gameState)
+		{
+			GameState = gameState;
 		}
 	}
 }

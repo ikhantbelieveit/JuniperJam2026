@@ -1,6 +1,7 @@
 using UnityEngine;
 using Mirror;
 using JJ26.Input;
+using JJ26.Network;
 
 namespace JJ26.Gameplay
 {
@@ -12,6 +13,7 @@ namespace JJ26.Gameplay
 
 		public void FixedUpdate()
 		{
+			if (GameNetworkManager.Instance.GameState.CurrentState != EGameState.Gameplay) { return; }
 			float speedMult = InputSystem.Jump ? _speedMult * 2 : _speedMult;
 
 			//continuous forward
