@@ -9,24 +9,13 @@ namespace JJ26.Gameplay
         [SerializeField] Transform _cameraTarget;
 		[SerializeField] Transform _playerTransform;
 
-		public void Start()
+		public override void OnStartAuthority()
 		{
-			PlayerGameData gameData = GameNetworkManager.Instance.GetLocalGameData();
-			if(gameData.connectionToClient == connectionToClient)
-			{
-				FollowCamera cam = Camera.main.GetComponent<FollowCamera>();
-				cam.SetTarget(_cameraTarget);
-				cam.SetPlayer(_playerTransform);
-			}
-			//if(GameNetworkManager.Instance.islo)
+			base.OnStartAuthority();
+
+			FollowCamera cam = Camera.main.GetComponent<FollowCamera>();
+			cam.SetTarget(_cameraTarget);
+			cam.SetPlayer(_playerTransform);
 		}
-
-		//public override void OnStartLocalPlayer()
-		//{
-		//	Debug.Log("Local player start - try set camera target");
-		//	base.OnStartLocalPlayer();
-
-		//	Camera.main.GetComponent<FollowCamera>().SetTarget(_cameraTarget);
-		//}
 	}
 }
