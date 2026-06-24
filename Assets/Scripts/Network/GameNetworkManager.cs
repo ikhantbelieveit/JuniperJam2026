@@ -15,9 +15,11 @@ namespace JJ26.Network
 
         [SerializeField] private PlayerLobbyData _playerLobbyDataPrefab;
 		[SerializeField] private PlayerGameData _playerGameDataPrefab;
+		[SerializeField] private GameStateData _gameStateDataPrefab;
 
 		public List<PlayerLobbyData> LobbyPlayers { get; } = new();
 		public List<PlayerGameData> GamePlayers { get; } = new();
+		public GameStateData GameState { get; private set; }
 
 		public delegate void ClientConnectEvent();
         public event ClientConnectEvent OnClientConnected;
@@ -193,6 +195,8 @@ namespace JJ26.Network
 		[Server]
 		public void ExitGame()
 		{
+			NetworkServer.Destroy(GameState.gameObject);
+			GameState = null;
 			StopHost();
 			
 		}
@@ -255,8 +259,18 @@ namespace JJ26.Network
 			if(GamePlayers.Count >= numPlayers)
 			{
 				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
+				TrySpawnGameState();
 				OnAllGameDataReady?.Invoke();
 			}
+		}
+
+		[Server]
+		void TrySpawnGameState()
+		{
+			if(null != GameState) { return; }
+			GameState = Instantiate(_gameStateDataPrefab);
+			DontDestroyOnLoad(GameState);
+			NetworkServer.Spawn(GameState.gameObject);
 		}
 	}
 }

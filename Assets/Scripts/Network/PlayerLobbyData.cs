@@ -1,10 +1,9 @@
-using UnityEngine;
-using Mirror;
 using JJ26.UI;
+using Mirror;
 
 namespace JJ26.Network
 {
-    public class PlayerLobbyData : NetworkBehaviour
+	public class PlayerLobbyData : NetworkBehaviour
     {
         [SyncVar(hook = nameof(HandleDisplayNameChanged))]
         public string DisplayName = "Loading...";
