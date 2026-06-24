@@ -271,6 +271,8 @@ namespace JJ26.Network
 			GameState = Instantiate(_gameStateDataPrefab);
 			DontDestroyOnLoad(GameState);
 			NetworkServer.Spawn(GameState.gameObject);
+
+			GameState.SetGameState(EGameState.Countdown);
 		}
 	}
 }
