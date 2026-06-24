@@ -38,7 +38,6 @@ namespace JJ26.Gameplay
 				{
 					float displacementMult = Mathf.Clamp01((pointHeight - point.position.y) / DepthBeforeSubmerged) * DisplacementAmount;
 					_rigidbody.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y / _floatPoints.Count) * displacementMult, 0f), point.position, ForceMode.Acceleration);
-					//_rigidbody.AddForce(displacementMult * -_rigidbody.linearVelocity * WaterDrag * Time.fixedDeltaTime, ForceMode.VelocityChange);
 					_rigidbody.AddForce(-_rigidbody.linearVelocity * WaterDrag * displacementMult, ForceMode.Acceleration);
 					_rigidbody.AddTorque(-_rigidbody.angularVelocity * WaterAngularDrag, ForceMode.Acceleration);
 

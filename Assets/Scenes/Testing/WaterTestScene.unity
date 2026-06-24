@@ -1491,8 +1491,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641016349}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.075809404, y: -0.8667306, z: 0.13900146, w: -0.47297955}
-  m_LocalPosition: {x: 4.6908875, y: 9.89903, z: 6.5435963}
+  m_LocalRotation: {x: -0.0033948005, y: -0.9808924, z: 0.19373548, w: -0.017466247}
+  m_LocalPosition: {x: -3.2642841, y: 4.651494, z: 10.846171}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3431,10 +3431,10 @@ MonoBehaviour:
   _rigidbody: {fileID: 1613155524}
   _floatPoints:
   - {fileID: 1613155529}
-  DepthBeforeSubmerged: 1
-  DisplacementAmount: 3
-  WaterDrag: 0.99
-  WaterAngularDrag: 0.5
+  DepthBeforeSubmerged: 0.25
+  DisplacementAmount: 1.5
+  WaterDrag: 0
+  WaterAngularDrag: 2
   GravityScale: 1
   RightingTorqueStrength: 20
 --- !u!65 &1613155526
@@ -3524,7 +3524,7 @@ Transform:
   m_GameObject: {fileID: 1613155523}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.51, y: 0, z: 13.26}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4187,7 +4187,6 @@ SceneRoots:
   - {fileID: 906101592}
   - {fileID: 853863640}
   - {fileID: 240572082}
-  - {fileID: 1613155529}
   - {fileID: 224651949}
   - {fileID: 288750847}
   - {fileID: 1811880286}
@@ -4200,3 +4199,4 @@ SceneRoots:
   - {fileID: 6952457241896384199}
   - {fileID: 2041410923}
   - {fileID: 1007344691}
+  - {fileID: 1613155529}
