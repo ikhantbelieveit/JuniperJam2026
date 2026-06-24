@@ -186,7 +186,6 @@ namespace JJ26.Network
 			{
 				if(!IsGameReady() && !forceStart) { return; }
 
-				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
 				ServerChangeScene("Level_Map_01");
 			}
 		}
@@ -196,15 +195,6 @@ namespace JJ26.Network
 		{
 			StopHost();
 			
-		}
-
-		public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
-		{
-			base.OnClientChangeScene(newSceneName, sceneOperation, customHandling);
-			if(IsGameScene(newSceneName))
-			{
-				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
-			}
 		}
 
 		public override void ServerChangeScene(string newSceneName)
@@ -264,6 +254,7 @@ namespace JJ26.Network
 
 			if(GamePlayers.Count >= numPlayers)
 			{
+				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
 				OnAllGameDataReady?.Invoke();
 			}
 		}
