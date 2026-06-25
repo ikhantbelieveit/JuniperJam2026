@@ -1,5 +1,6 @@
 using UnityEngine;
 using Mirror;
+using JJ26.UI;
 
 namespace JJ26.Network
 {
@@ -21,10 +22,15 @@ namespace JJ26.Network
         [SyncVar] public float CountdownTimeRemaining;
         [SyncVar] public float PostMatchTimeRemaining;
 
-        [SyncVar] public EGameState CurrentState;
+        [SyncVar(hook = nameof(OnStateChanged))] public EGameState CurrentState;
 
-        public delegate void GameStateEvent(EGameState state);
+        public delegate void GameStateEvent(EGameState newState);
         public event GameStateEvent OnGameStateChanged;
+
+        public void OnStateChanged(EGameState oldState, EGameState newState)
+		{
+            OnGameStateChanged?.Invoke(newState);
+		}
 
 		public override void OnStartClient()
 		{
@@ -33,8 +39,22 @@ namespace JJ26.Network
             if(null == GameNetworkManager.Instance.GameState)
 			{
                 GameNetworkManager.Instance.SetGameState(this);
+                
             }
-		}
+
+            var gameplayUI = FindAnyObjectByType(typeof(GameplayUIController)) as GameplayUIController;
+            OnGameStateChanged -= gameplayUI.OnGameStateChanged;
+            OnGameStateChanged += gameplayUI.OnGameStateChanged;
+        }
+
+		public void OnDestroy()
+		{
+            var gameplayUI = FindAnyObjectByType(typeof(GameplayUIController)) as GameplayUIController;
+            if(gameplayUI)
+			{
+                OnGameStateChanged -= gameplayUI.OnGameStateChanged;
+            }
+        }
 
 		[Server]
         void BeginCountdown()
@@ -75,7 +95,6 @@ namespace JJ26.Network
                     BeginPostMatch();
                     break;
 			}
-            OnGameStateChanged?.Invoke(CurrentState);
 		}
 
         [Server]

@@ -44,7 +44,9 @@ namespace JJ26.UI
 
 			if(active)
 			{
-				RefreshActiveObjectsForState();
+				var gameStateData = GameNetworkManager.Instance.GameState;
+				EGameState gameState = (null == gameStateData) ? EGameState.Countdown : gameStateData.CurrentState;
+				RefreshActiveObjectsForState(gameState);
 			}
 		}
 
@@ -57,7 +59,7 @@ namespace JJ26.UI
 
 			base.UpdateController();
 
-			RefreshActiveObjectsForState();
+			//RefreshActiveObjectsForState();
 
 			switch (GameNetworkManager.Instance.GameState?.CurrentState)
 			{
@@ -97,22 +99,13 @@ namespace JJ26.UI
 			UpdateInput();
 		}
 
-		void RefreshActiveObjectsForState()
+		void RefreshActiveObjectsForState(EGameState gameState)
 		{
-			if(null == GameNetworkManager.Instance.GameState)
-			{
-				_countdownTextGO.SetActive(true);
-				_matchTimeTextGO.SetActive(false);
-				_speedWheelGO.SetActive(false);
-				_directionWheelGO.SetActive(false);
-				_postMatchGO.SetActive(false);
-				return;
-			}
-			_countdownTextGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Countdown);
-			_matchTimeTextGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
-			_speedWheelGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
-			_directionWheelGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
-			_postMatchGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.PostMatch);
+			_countdownTextGO.SetActive(gameState == EGameState.Countdown);
+			_matchTimeTextGO.SetActive(gameState == EGameState.Gameplay);
+			_speedWheelGO.SetActive(gameState == EGameState.Gameplay);
+			_directionWheelGO.SetActive(gameState == EGameState.Gameplay);
+			_postMatchGO.SetActive(gameState == EGameState.PostMatch);
 		}
 
 
@@ -147,11 +140,13 @@ namespace JJ26.UI
 
 		public void UpdateInput()
 		{
-			if(InputSystem.UICancelPressed)
-			{
-				var gameData = GameNetworkManager.Instance.GetLocalGameData();
-				gameData.CmdExitGame();
-			}
+
+
+		}
+
+		public void OnGameStateChanged(EGameState newState)
+		{
+			RefreshActiveObjectsForState(newState);
 		}
 	}
 }
