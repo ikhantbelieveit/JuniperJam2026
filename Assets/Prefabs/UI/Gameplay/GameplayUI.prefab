@@ -2880,7 +2880,7 @@ PrefabInstance:
       objectReference: {fileID: 3596053782421134334}
     - target: {fileID: 4066406132382163218, guid: 92a84bae2b2f7b34dbf3a168b0fe5474, type: 3}
       propertyPath: _maxInputValue
-      value: 40
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4066406132382163218, guid: 92a84bae2b2f7b34dbf3a168b0fe5474, type: 3}
       propertyPath: _minInputValue
