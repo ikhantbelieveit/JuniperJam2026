@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - BuoyancyPoint
+  - OceanDependant
   layers:
   - Default
   - TransparentFX
