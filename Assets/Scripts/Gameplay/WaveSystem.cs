@@ -21,8 +21,8 @@ namespace JJ26.Gameplay
 		const float _gravity = 9.81f;
 		const float _pi = 3.14159265f;
 
-		public const float OCEAN_SCALE_X = 50f;
-		public const float OCEAN_SCALE_Z = 50f;
+		public const float OCEAN_SCALE_X = 1f;
+		public const float OCEAN_SCALE_Z = 1f;
 
 		public Vector3 SampleDisplacement(Vector3 worldPos)
 		{
