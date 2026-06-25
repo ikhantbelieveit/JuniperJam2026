@@ -307,8 +307,6 @@ namespace JJ26.Network
 			ItemSpawner = Instantiate(_itemSpawnerPrefab);
 			DontDestroyOnLoad(ItemSpawner);
 			NetworkServer.Spawn(ItemSpawner.gameObject);
-
-			GameState.SetGameState(EGameState.Countdown);
 		}
 
 		public void SetGameState(GameStateData gameState)
