@@ -25,14 +25,8 @@ namespace JJ26.UI
 		[SerializeField] Color _countdownColour1 = Color.yellow;
 		[SerializeField] Color _countdownColourGo = Color.green;
 
-		[SerializeField] GameObject _powerWheelGO;
-		[SerializeField] GameObject _steeringWheelGO;
-
-		[SerializeField] DirectionWheel _steeringWheel;
-		public DirectionWheel SteeringWheel => _steeringWheel;
-
-		[SerializeField] DirectionWheel _powerWheel;
-		public DirectionWheel PowerWheel => _powerWheel;
+		[SerializeField] GameObject _speedWheelGO;
+		[SerializeField] GameObject _directionWheelGO;
 
 		[SerializeField] GameObject _postMatchGO;
 
@@ -58,8 +52,6 @@ namespace JJ26.UI
 				var gameStateData = GameNetworkManager.Instance.GameState;
 				EGameState gameState = (null == gameStateData) ? EGameState.Countdown : gameStateData.CurrentState;
 				RefreshActiveObjectsForState(gameState);
-				_steeringWheel.ResetWheel();
-				_powerWheel.ResetWheel();
 			}
 		}
 
@@ -114,8 +106,8 @@ namespace JJ26.UI
 		{
 			_countdownTextGO.SetActive(gameState == EGameState.Countdown);
 			_matchTimeTextGO.SetActive(gameState == EGameState.Gameplay);
-			_powerWheelGO.SetActive(gameState == EGameState.Gameplay);
-			_steeringWheelGO.SetActive(gameState == EGameState.Gameplay);
+			_speedWheelGO.SetActive(gameState == EGameState.Gameplay);
+			_directionWheelGO.SetActive(gameState == EGameState.Gameplay);
 			_postMatchGO.SetActive(gameState == EGameState.PostMatch);
 		}
 
