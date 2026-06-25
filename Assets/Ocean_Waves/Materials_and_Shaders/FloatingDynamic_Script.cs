@@ -21,24 +21,11 @@ public class FloatingDynamic_Script : MonoBehaviour
     {
         m_applied_rotation = Object_to_Float.transform.rotation;
         m_Ocean = FindAnyObjectByType<Ocean_Master_Script>();
-
-        //foreach (Transform child in Object_to_Float)
-        //{
-        //    if(child.CompareTag("BuoyancyPoint"))
-        //    {
-        //        print("adding to list");
-        //        m_BuoyancyPoints.Add(child);
-        //    }
-        //}
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Vector3 _worldspace = transform.TransformPoint(m_Testpoint.transform.position);
-        //Vector2 _coordinate = new(_worldspace.x, _worldspace.z);
-        //print(_coordinate);
-
         Vector3 _mean_points = new();
 
         foreach (Transform point in m_BuoyancyPoints)
@@ -60,10 +47,6 @@ public class FloatingDynamic_Script : MonoBehaviour
         //calculate a side and forward angle to change the object angle
         float Forward_Angle = Vector3.SignedAngle(m_BuoyancyPoints[1].position, m_BuoyancyPoints[0].position,transform.up);
         float Side_Angle = Vector3.SignedAngle(m_BuoyancyPoints[1].position, m_BuoyancyPoints[2].position, transform.up);
-        Vector3 Angle_rot = new(Forward_Angle, 0f, Side_Angle);
-        print(Angle_rot);
-        //Vector3 _original_angle = Object_to_Float.transform.rotation.eulerAngles;
-        //print(_original_angle);
 
         Vector3 Forward = Vector3.Normalize(m_BuoyancyPoints[0].position - m_BuoyancyPoints[1].position);
 
@@ -72,46 +55,8 @@ public class FloatingDynamic_Script : MonoBehaviour
 
         Quaternion rotation = Quaternion.LookRotation(Forward, Up);
 
-        //float anglex = Mathf.Atan2(m_BuoyancyPoints[1].position.x, m_BuoyancyPoints[0].position.x);
-        //float angley = Mathf.Atan2(m_BuoyancyPoints[1].position.y, m_BuoyancyPoints[0].position.y);
-        //float anglez = Mathf.Atan2(m_BuoyancyPoints[1].position.z, m_BuoyancyPoints[0].position.z);
-        //Vector3 Anglenew = new(anglex, angley, anglez);
-        //
-        //Vector3 _original_angle = Object_to_Float.transform.rotation.eulerAngles;
-        //
-        //_original_angle += Anglenew;
         Object_to_Float.rotation = rotation * m_applied_rotation;
 
-        //Quaternion forward_Quat = Quaternion.LookRotation(Forward, Up);
-
-        //Quaternion _original_angle = Object_to_Float.transform.rotation;
-
-        //Quaternion new_rot = forward_Quat * _original_angle;
-        //Object_to_Float.rotation = new_rot;
-
-
-
-
-
-
-
-        //float y_target = m_Ocean.GetWaveHeight(_target_point);
-        //
-        //float floatpoint_offset = Object_to_Float.position.y - _target_point.y;
-        //y_target = y_target + floatpoint_offset;
-        //float target_offset = y_target - Object_to_Float.position.y;
-
-
-        // - Rotation
-        //Vector3 direction = Object_to_Float.position - _target_point;
-        //
-        //Vector3 _original_angle = Object_to_Float.transform.rotation.eulerAngles;
-        //print(_original_angle);
-
-        //_original_angle += angle;
-
-        //Object_to_Float.transform.position += new Vector3(0f, target_offset, 0f);
-        //Object_to_Float.rotation = Quaternion.LookRotation(angle);
 
     }
 
