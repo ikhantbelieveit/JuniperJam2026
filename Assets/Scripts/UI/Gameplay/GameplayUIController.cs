@@ -90,7 +90,7 @@ namespace JJ26.UI
 							break;
 						case 0:
 							_countdownText.color = _countdownColourGo;
-							_countdownText.SetText("GO!");
+							_countdownText.SetText("AHOY!!");
 							break;
 					}
 					break;
