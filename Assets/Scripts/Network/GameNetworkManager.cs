@@ -16,10 +16,12 @@ namespace JJ26.Network
         [SerializeField] private PlayerLobbyData _playerLobbyDataPrefab;
 		[SerializeField] private PlayerGameData _playerGameDataPrefab;
 		[SerializeField] private GameStateData _gameStateDataPrefab;
+		[SerializeField] private ItemSpawner _itemSpawnerPrefab;
 
 		public List<PlayerLobbyData> LobbyPlayers { get; } = new();
 		public List<PlayerGameData> GamePlayers { get; } = new();
 		public GameStateData GameState { get; private set; }
+		public ItemSpawner ItemSpawner { get; private set; }
 
 		public delegate void ClientConnectEvent();
         public event ClientConnectEvent OnClientConnected;
@@ -257,10 +259,12 @@ namespace JJ26.Network
 		private void AllPlayersLoaded()
 		{
 			TrySpawnGameState();
-
+			TrySpawnItemSpawner();
 			if(GameState != null)
 			{
 				GameState.SetGameState(EGameState.Countdown);
+				ItemSpawner.ResetSpawnTime();
+				ItemSpawner.SpawnInitialItems();
 			}
 		}
 
@@ -296,9 +300,25 @@ namespace JJ26.Network
 			GameState.SetGameState(EGameState.Countdown);
 		}
 
+		[Server]
+		void TrySpawnItemSpawner()
+		{
+			if (null != ItemSpawner) { return; }
+			ItemSpawner = Instantiate(_itemSpawnerPrefab);
+			DontDestroyOnLoad(ItemSpawner);
+			NetworkServer.Spawn(ItemSpawner.gameObject);
+
+			GameState.SetGameState(EGameState.Countdown);
+		}
+
 		public void SetGameState(GameStateData gameState)
 		{
 			GameState = gameState;
+		}
+
+		public void SetItemSpawner(ItemSpawner spawner)
+		{
+			ItemSpawner = spawner;
 		}
 
 		public List<PlayerGameData> GetPlayerDataRanked()

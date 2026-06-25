@@ -60,6 +60,8 @@ namespace JJ26.UI
 				RefreshActiveObjectsForState(gameState);
 				_steeringWheel.ResetWheel();
 				_powerWheel.ResetWheel();
+				_countdownText.color = _countdownColour3;
+				_countdownText.SetText("LOADING...");
 			}
 		}
 
@@ -182,9 +184,11 @@ namespace JJ26.UI
 
 		public void OnGameStateChanged(EGameState newState)
 		{
-			if(newState == EGameState.PostMatch)
+			switch(newState)
 			{
-				SetupLeaderboard();
+				case EGameState.PostMatch:
+					SetupLeaderboard();
+					break;
 			}
 
 			RefreshActiveObjectsForState(newState);

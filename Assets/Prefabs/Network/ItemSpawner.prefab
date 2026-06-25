@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1016338012384400156}
   - component: {fileID: 7636871375536567313}
-  - component: {fileID: 5051175228796611051}
+  - component: {fileID: -9053237626717621459}
   m_Layer: 0
-  m_Name: GameStateData
+  m_Name: ItemSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Mirror::Mirror.NetworkIdentity
   sceneId: 0
-  _assetId: 1430858179
+  _assetId: 4191443782
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &5051175228796611051
+--- !u!114 &-9053237626717621459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,16 +59,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8724655233675050318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cdd3007419c3b44b976dbfc81bed4b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 37f6c1abcac7be74f8060b0c335a2803, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JJ26.UI.GameStateData
+  m_EditorClassIdentifier: Assembly-CSharp::JJ26.Network.ItemSpawner
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  _matchDuration: 60
-  _countdownDuration: 3.99
-  _postMatchDuration: 10
-  MatchTimeRemaining: 0
-  CountdownTimeRemaining: 0
-  PostMatchTimeRemaining: 0
-  CurrentState: 0
+  _spawnDuration_Min: 1
+  _spawnDuration_Max: 3
+  _spawnAreaRadius: 300
+  _treasurePrefabs:
+  - {fileID: 3546764417615817083, guid: 378851938f4bfb44daefb26b8ed4ba5f, type: 3}
+  - {fileID: 3546764417615817083, guid: 37891d8027fd8f047821965060dcfba6, type: 3}
+  - {fileID: 3546764417615817083, guid: bde0aa37c3438274ab27ee04ed01348d, type: 3}
+  - {fileID: 3546764417615817083, guid: 46042ae7d7dd8cf4b9074e642bfb2b02, type: 3}
+  - {fileID: 3546764417615817083, guid: ce39e8d025b256e46b588e82c4c55915, type: 3}
+  - {fileID: 3546764417615817083, guid: ab978a05aa7316e4dbe75ac42719812c, type: 3}
+  SpawnTimeRemaining: 0
+  _initialSpawnAmount: 4
