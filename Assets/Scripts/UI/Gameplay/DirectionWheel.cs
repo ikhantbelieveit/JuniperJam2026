@@ -46,9 +46,7 @@ public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler
 	private float GetPointerAngleDegrees(Vector2 pointerScreenPos)
 	{
 		Vector2 wheelCentre = RectTransformUtility.WorldToScreenPoint(_uiCamera, _rect.position);
-
 		Vector2 direction = pointerScreenPos - wheelCentre;
-
 		return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 	}
 
