@@ -30,6 +30,11 @@ namespace JJ26.UI
 
 		[SerializeField] GameObject _postMatchGO;
 
+		[SerializeField] TMP_Text _winnerNameText;
+		[SerializeField] TMP_Text _winnerScoreText;
+
+		[SerializeField] List<LeaderboardEntry> _leaderboardEntries;
+
 		#region UIController
 
 		public override void Initialise()
@@ -44,7 +49,9 @@ namespace JJ26.UI
 
 			if(active)
 			{
-				RefreshActiveObjectsForState();
+				var gameStateData = GameNetworkManager.Instance.GameState;
+				EGameState gameState = (null == gameStateData) ? EGameState.Countdown : gameStateData.CurrentState;
+				RefreshActiveObjectsForState(gameState);
 			}
 		}
 
@@ -56,8 +63,6 @@ namespace JJ26.UI
 			}
 
 			base.UpdateController();
-
-			RefreshActiveObjectsForState();
 
 			switch (GameNetworkManager.Instance.GameState?.CurrentState)
 			{
@@ -97,22 +102,13 @@ namespace JJ26.UI
 			UpdateInput();
 		}
 
-		void RefreshActiveObjectsForState()
+		void RefreshActiveObjectsForState(EGameState gameState)
 		{
-			if(null == GameNetworkManager.Instance.GameState)
-			{
-				_countdownTextGO.SetActive(true);
-				_matchTimeTextGO.SetActive(false);
-				_speedWheelGO.SetActive(false);
-				_directionWheelGO.SetActive(false);
-				_postMatchGO.SetActive(false);
-				return;
-			}
-			_countdownTextGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Countdown);
-			_matchTimeTextGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
-			_speedWheelGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
-			_directionWheelGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.Gameplay);
-			_postMatchGO.SetActive(GameNetworkManager.Instance.GameState.CurrentState == EGameState.PostMatch);
+			_countdownTextGO.SetActive(gameState == EGameState.Countdown);
+			_matchTimeTextGO.SetActive(gameState == EGameState.Gameplay);
+			_speedWheelGO.SetActive(gameState == EGameState.Gameplay);
+			_directionWheelGO.SetActive(gameState == EGameState.Gameplay);
+			_postMatchGO.SetActive(gameState == EGameState.PostMatch);
 		}
 
 
@@ -147,11 +143,43 @@ namespace JJ26.UI
 
 		public void UpdateInput()
 		{
-			if(InputSystem.UICancelPressed)
+
+
+		}
+
+		void SetupLeaderboard()
+		{
+			List<PlayerGameData> playersRanked = GameNetworkManager.Instance.GetPlayerDataRanked();
+
+			foreach(var entry in _leaderboardEntries)
 			{
-				var gameData = GameNetworkManager.Instance.GetLocalGameData();
-				gameData.CmdExitGame();
+				entry.gameObject.SetActive(false);
 			}
+
+			PlayerGameData winner = playersRanked[0];
+			string winnerText = winner.DisplayName + " WINS!!";
+			string scoreText = string.Format("{0:C}", winner.Score);
+			_winnerNameText.text = winnerText;
+			_winnerScoreText.text = scoreText;
+
+			for(int runnerUpIndex = 1; runnerUpIndex < playersRanked.Count; ++runnerUpIndex)
+			{
+				PlayerGameData runnerUp = playersRanked[runnerUpIndex];
+
+				int objectIndex = runnerUpIndex - 1;
+				_leaderboardEntries[objectIndex].gameObject.SetActive(true);
+				_leaderboardEntries[objectIndex].SetUpForPlayer(runnerUpIndex + 1, runnerUp.DisplayName, runnerUp.Score);
+			}
+		}
+
+		public void OnGameStateChanged(EGameState newState)
+		{
+			if(newState == EGameState.PostMatch)
+			{
+				SetupLeaderboard();
+			}
+
+			RefreshActiveObjectsForState(newState);
 		}
 	}
 }
