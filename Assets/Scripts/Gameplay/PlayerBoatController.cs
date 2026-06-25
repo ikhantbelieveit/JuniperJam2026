@@ -9,7 +9,7 @@ namespace JJ26.Gameplay
     public class PlayerBoatController : NetworkBehaviour
     {
         [SerializeField] Rigidbody _rb;
-		[SerializeField] float _speedMult = 40f;
+		[SerializeField] float _speedMult = 1f;
 		[SerializeField] float _steeringPower = 15f;
 
 		private DirectionWheel _steeringWheel;
@@ -25,10 +25,10 @@ namespace JJ26.Gameplay
 		public void FixedUpdate()
 		{
 			if (GameNetworkManager.Instance.GameState.CurrentState != EGameState.Gameplay) { return; }
-			float speedMult = InputSystem.Jump ? _speedMult * 2 : _speedMult;
 
 			//continuous forward
-			_rb.AddForce(transform.forward * speedMult, ForceMode.Acceleration);
+			float forwardSpeed = _powerWheel.InputValue * _speedMult;
+			_rb.AddForce(transform.forward * forwardSpeed, ForceMode.Acceleration);
 
 			//left/right steering
 			_rb.AddTorque(Vector3.up * -_steeringWheel.InputValue * _steeringPower, ForceMode.Acceleration);

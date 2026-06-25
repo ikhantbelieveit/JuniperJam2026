@@ -46,7 +46,6 @@ public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 		float inputValue = _readingInput ? _prevDeltaAngle : 0;
 		inputValue = Mathf.Clamp(inputValue, _minInputValue, _maxInputValue);
 		_inputValue = inputValue;
-		Debug.Log("Current input from wheel " + gameObject.name + " is " + _inputValue.ToString());
 	}
 
 	public void OnPointerUp(PointerEventData eventData)
