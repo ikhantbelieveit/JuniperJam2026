@@ -29,7 +29,10 @@ namespace JJ26.UI
 		[SerializeField] GameObject _steeringWheelGO;
 
 		[SerializeField] DirectionWheel _steeringWheel;
+		public DirectionWheel SteeringWheel => _steeringWheel;
+
 		[SerializeField] DirectionWheel _powerWheel;
+		public DirectionWheel PowerWheel => _powerWheel;
 
 		[SerializeField] GameObject _postMatchGO;
 

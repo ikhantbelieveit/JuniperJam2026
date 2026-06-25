@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler
+public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [SerializeField] RectTransform _rect;
 	[SerializeField] Canvas _canvas;
@@ -11,8 +11,16 @@ public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler
 	[SerializeField] float _mouseSensitivity = 1;
 	[SerializeField] float _slowdownInertia = 1;
 
+	[SerializeField] float _minInputValue = -1;
+	[SerializeField] float _maxInputValue = 1;
+
 	private float _previousAngle;
 	private float _spinVelocity;
+
+	private bool _readingInput;
+	private float _inputValue;
+	public float InputValue => _inputValue;
+	private float _prevDeltaAngle;
 
 	private void Awake()
 	{
@@ -28,8 +36,27 @@ public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler
 		_spinVelocity = Mathf.Lerp(_spinVelocity, 0, _slowdownInertia * Time.deltaTime);
 	}
 
+	private void FixedUpdate()
+	{
+		UpdateInput();
+	}
+
+	private void UpdateInput()
+	{
+		float inputValue = _readingInput ? _prevDeltaAngle : 0;
+		inputValue = Mathf.Clamp(inputValue, _minInputValue, _maxInputValue);
+		_inputValue = inputValue;
+		Debug.Log("Current input from wheel " + gameObject.name + " is " + _inputValue.ToString());
+	}
+
+	public void OnPointerUp(PointerEventData eventData)
+	{
+		_readingInput = false;
+	}
+
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		_readingInput = true;
 		_previousAngle = GetPointerAngleDegrees(eventData.position);
 	}
 
@@ -41,6 +68,7 @@ public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler
 		_previousAngle = currentAngle;
 
 		_spinVelocity = deltaAngle * _mouseSensitivity;
+		_prevDeltaAngle = deltaAngle;
 	}
 
 	private float GetPointerAngleDegrees(Vector2 pointerScreenPos)
@@ -55,5 +83,7 @@ public class DirectionWheel : MonoBehaviour, IPointerDownHandler, IDragHandler
 		_rect.SetPositionAndRotation(_rect.position, Quaternion.identity);
 		_previousAngle = 0f;
 		_spinVelocity = 0f;
+		_readingInput = false;
+		_prevDeltaAngle = 0f;
 	}
 }
