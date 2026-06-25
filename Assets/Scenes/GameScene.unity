@@ -210,6 +210,14 @@ MonoBehaviour:
   - {fileID: 2790167733135268694, guid: 3c0427c43bd030f42a2cfd1e87a1f7bd, type: 3}
   - {fileID: 1917772671494148446, guid: a8f837dee081c0042a7211814c314f10, type: 3}
   - {fileID: 8724655233675050318, guid: f346742cce6efa94d869a28d59fa39d1, type: 3}
+  - {fileID: 8724655233675050318, guid: a881e0a720ec2d64b983b442b418853e, type: 3}
+  - {fileID: 5618332496827321679, guid: 378851938f4bfb44daefb26b8ed4ba5f, type: 3}
+  - {fileID: 5618332496827321679, guid: 37891d8027fd8f047821965060dcfba6, type: 3}
+  - {fileID: 5618332496827321679, guid: bde0aa37c3438274ab27ee04ed01348d, type: 3}
+  - {fileID: 5618332496827321679, guid: 72a18de323c91d74c91de9dfdb808dba, type: 3}
+  - {fileID: 5618332496827321679, guid: 46042ae7d7dd8cf4b9074e642bfb2b02, type: 3}
+  - {fileID: 5618332496827321679, guid: ce39e8d025b256e46b588e82c4c55915, type: 3}
+  - {fileID: 5618332496827321679, guid: ab978a05aa7316e4dbe75ac42719812c, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -230,6 +238,7 @@ MonoBehaviour:
   _playerLobbyDataPrefab: {fileID: 3508362204262252363, guid: ecc1cfb6d7d6b874abe35cb5395b82bb, type: 3}
   _playerGameDataPrefab: {fileID: 572007869026243568, guid: b8ca67a3c4acd67489cf597215bf4ac4, type: 3}
   _gameStateDataPrefab: {fileID: 5051175228796611051, guid: f346742cce6efa94d869a28d59fa39d1, type: 3}
+  _itemSpawnerPrefab: {fileID: -9053237626717621459, guid: a881e0a720ec2d64b983b442b418853e, type: 3}
 --- !u!1 &971694015
 GameObject:
   m_ObjectHideFlags: 0
