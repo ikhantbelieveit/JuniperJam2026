@@ -24,9 +24,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638083771942895263}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.48281288, y: 0.017198402, z: -0.009484385, w: 0.8755033}
+  m_LocalPosition: {x: -0.0031031463, y: -0.07894134, z: -0.066636935}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4533890818605199856}
@@ -41,8 +41,8 @@ Transform:
   - {fileID: 6916906424028232052}
   - {fileID: 3632785045014030492}
   - {fileID: 11702671616807027}
-  m_Father: {fileID: 8293927901484757812}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 2273243480870185884}
+  m_LocalEulerAnglesHint: {x: -57.681, y: 4.213, z: -3.562}
 --- !u!1001 &6821712995235030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -891,6 +891,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 27306293093980638, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1608110731469400154, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -951,13 +955,13 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 4857541709318243280, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1608110731469400154, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 8846465694682083570, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1016641438741084774}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
---- !u!4 &8293927901484757812 stripped
+--- !u!4 &2273243480870185884 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1608110731469400154, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8846465694682083570, guid: 99af7fe96c81de446b25faf66d007eeb, type: 3}
   m_PrefabInstance: {fileID: 7298324311659060078}
   m_PrefabAsset: {fileID: 0}
