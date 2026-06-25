@@ -47,6 +47,8 @@ namespace JJ26.Network
 
 		public static GameNetworkManager Instance => singleton as GameNetworkManager;
 
+		private List<int> _playerIDsInScene = new();
+
 		public override void OnClientConnect()
 		{
 			base.OnClientConnect();
@@ -203,8 +205,10 @@ namespace JJ26.Network
 
 		public override void ServerChangeScene(string newSceneName)
 		{
+			_playerIDsInScene.Clear();
+
 			//if going from menu to game
-			if(SceneManager.GetActiveScene().path == _gameScene && newSceneName.StartsWith("Level_Map"))
+			if (SceneManager.GetActiveScene().path == _gameScene && newSceneName.StartsWith("Level_Map"))
 			{
 				foreach(var player in LobbyPlayers)
 				{
@@ -239,6 +243,24 @@ namespace JJ26.Network
 			if(CurrentlyInGameScene())
 			{
 				(FindAnyObjectByType<Gameplay.PlayerSpawnSystem>()).SpawnPlayer(conn);
+
+				_playerIDsInScene.Add(conn.connectionId);
+
+				if(_playerIDsInScene.Count == NetworkServer.connections.Count)
+				{
+					AllPlayersLoaded();
+				}
+			}
+		}
+
+		[Server]
+		private void AllPlayersLoaded()
+		{
+			TrySpawnGameState();
+
+			if(GameState != null)
+			{
+				GameState.SetGameState(EGameState.Countdown);
 			}
 		}
 
@@ -258,9 +280,7 @@ namespace JJ26.Network
 
 			if(GamePlayers.Count >= numPlayers)
 			{
-				TrySpawnGameState();
 				UIStateSystem.EnterScreen(UIStateSystem.EUIState.Gameplay);
-				
 				OnAllGameDataReady?.Invoke();
 			}
 		}
