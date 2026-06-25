@@ -280,5 +280,10 @@ namespace JJ26.Network
 		{
 			GameState = gameState;
 		}
+
+		public List<PlayerGameData> GetPlayerDataRanked()
+		{
+			return GamePlayers.OrderByDescending(player => player.Score).ToList();
+		}
 	}
 }

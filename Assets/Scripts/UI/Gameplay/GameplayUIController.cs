@@ -30,6 +30,11 @@ namespace JJ26.UI
 
 		[SerializeField] GameObject _postMatchGO;
 
+		[SerializeField] TMP_Text _winnerNameText;
+		[SerializeField] TMP_Text _winnerScoreText;
+
+		[SerializeField] List<LeaderboardEntry> _leaderboardEntries;
+
 		#region UIController
 
 		public override void Initialise()
@@ -58,8 +63,6 @@ namespace JJ26.UI
 			}
 
 			base.UpdateController();
-
-			//RefreshActiveObjectsForState();
 
 			switch (GameNetworkManager.Instance.GameState?.CurrentState)
 			{
@@ -144,8 +147,38 @@ namespace JJ26.UI
 
 		}
 
+		void SetupLeaderboard()
+		{
+			List<PlayerGameData> playersRanked = GameNetworkManager.Instance.GetPlayerDataRanked();
+
+			foreach(var entry in _leaderboardEntries)
+			{
+				entry.gameObject.SetActive(false);
+			}
+
+			PlayerGameData winner = playersRanked[0];
+			string winnerText = winner.DisplayName + " WINS!!";
+			string scoreText = string.Format("{0:C}", winner.Score);
+			_winnerNameText.text = winnerText;
+			_winnerScoreText.text = scoreText;
+
+			for(int runnerUpIndex = 1; runnerUpIndex < playersRanked.Count; ++runnerUpIndex)
+			{
+				PlayerGameData runnerUp = playersRanked[runnerUpIndex];
+
+				int objectIndex = runnerUpIndex - 1;
+				_leaderboardEntries[objectIndex].gameObject.SetActive(true);
+				_leaderboardEntries[objectIndex].SetUpForPlayer(runnerUpIndex + 1, runnerUp.DisplayName, runnerUp.Score);
+			}
+		}
+
 		public void OnGameStateChanged(EGameState newState)
 		{
+			if(newState == EGameState.PostMatch)
+			{
+				SetupLeaderboard();
+			}
+
 			RefreshActiveObjectsForState(newState);
 		}
 	}

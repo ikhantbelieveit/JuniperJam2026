@@ -811,6 +811,12 @@ MonoBehaviour:
   _speedWheelGO: {fileID: 8684317081611647177}
   _directionWheelGO: {fileID: 8184916685963506341}
   _postMatchGO: {fileID: 1489836617123667769}
+  _winnerNameText: {fileID: 5284395709201094580}
+  _winnerScoreText: {fileID: 2583644167289516373}
+  _leaderboardEntries:
+  - {fileID: 6645228145269799331}
+  - {fileID: 50008078761676264}
+  - {fileID: 6242120607395556359}
 --- !u!1 &7492215058087852556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +1987,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
+--- !u!114 &50008078761676264 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2794304760146407495, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
+  m_PrefabInstance: {fileID: 2771674521999572399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e33ebfe6059aa4fb496521a971810e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeaderboardEntry
 --- !u!224 &8955253297098536785 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6499121043733269246, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
@@ -2245,6 +2262,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6499121043733269246, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
   m_PrefabInstance: {fileID: 8099489463639514176}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6242120607395556359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2794304760146407495, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
+  m_PrefabInstance: {fileID: 8099489463639514176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e33ebfe6059aa4fb496521a971810e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeaderboardEntry
 --- !u!1001 &8863025335479716324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2347,6 +2375,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6499121043733269246, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
   m_PrefabInstance: {fileID: 8863025335479716324}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6645228145269799331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2794304760146407495, guid: 349417738d35db84a8300e6ef09e391a, type: 3}
+  m_PrefabInstance: {fileID: 8863025335479716324}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e33ebfe6059aa4fb496521a971810e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeaderboardEntry
 --- !u!1001 &9188610120711178195
 PrefabInstance:
   m_ObjectHideFlags: 0

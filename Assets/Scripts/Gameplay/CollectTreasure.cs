@@ -28,11 +28,15 @@ namespace JJ26.Gameplay
 		public void Collect(NetworkConnectionToClient conn)
 		{
 			List<PlayerGameData> gameData = GameNetworkManager.Instance.GamePlayers;
-			foreach(var data in gameData)
+
+			if(GameNetworkManager.Instance.GameState?.CurrentState == EGameState.Gameplay)
 			{
-				if(data.connectionToClient == conn)
+				foreach (var data in gameData)
 				{
-					data.AddToScore(_scoreValue);
+					if (data.connectionToClient == conn)
+					{
+						data.AddToScore(_scoreValue);
+					}
 				}
 			}
 
