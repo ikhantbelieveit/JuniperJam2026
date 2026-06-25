@@ -268,7 +268,7 @@ MonoBehaviour:
   syncInterval: 0
   _rb: {fileID: 6789189890968423311}
   _speedMult: 40
-  _steeringPower: 7
+  _steeringPower: 4
 --- !u!1 &1956899714171711137
 GameObject:
   m_ObjectHideFlags: 0
