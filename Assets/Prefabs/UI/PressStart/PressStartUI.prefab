@@ -168,15 +168,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: SERIOUS GAME JAM
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
-  m_sharedMaterial: {fileID: 6632044769077319453, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
+  m_sharedMaterial: {fileID: 1962535644584190282, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190154
-  m_fontColor: {r: 0.2905661, g: 0, b: 0, a: 1}
+    rgba: 4288587877
+  m_fontColor: {r: 0.3974724, g: 0.6603774, b: 0.62054324, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -272,7 +272,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 17, y: 0}
   m_SizeDelta: {x: 800, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6289010045345219044
@@ -305,15 +305,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: This time... it's serious.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
-  m_sharedMaterial: {fileID: 6632044769077319453, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
+  m_sharedMaterial: {fileID: 1962535644584190282, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4282861527
+  m_fontColor: {r: 0.8415094, g: 0.2778568, b: 0.2778568, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
