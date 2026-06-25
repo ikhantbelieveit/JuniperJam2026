@@ -14,13 +14,13 @@ public class FloatingDynamic_Script : MonoBehaviour
     Quaternion m_applied_rotation;
     
 
-    Ocean_Helper_Script m_Ocean;
+    Ocean_Master_Script m_Ocean;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         m_applied_rotation = Object_to_Float.transform.rotation;
-        m_Ocean = FindAnyObjectByType<Ocean_Helper_Script>();
+        m_Ocean = FindAnyObjectByType<Ocean_Master_Script>();
 
         //foreach (Transform child in Object_to_Float)
         //{

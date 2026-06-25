@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 16693692132582346}
   - component: {fileID: 6736109410935502316}
   - component: {fileID: 355350299592082770}
-  - component: {fileID: 5457106214321656440}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -91,23 +90,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5457106214321656440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4431181404419741722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eccf2cf265d9bda4fbfd628ec738116f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  Base_Wave_Length: 10
-  Base_Wave_Height_Strength: 0.5
-  Base_Wave_X_Direction_Strength: 1
-  Base_Wave_Y_Direction_Strength: 1
-  Variance_Wave_Length: 0.5
-  Variance_Wave_Height_Strength: 0.25
-  Variance_Wave_X_Direction_Strength: 1
-  Variance_Wave_Y_Direction_Strength: 1
