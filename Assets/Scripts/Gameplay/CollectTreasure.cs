@@ -11,6 +11,7 @@ namespace JJ26.Gameplay
 		[SerializeField] BoxCollider _boxCollision;
 		[SerializeField] GameObject _visualsGO;
 		[SerializeField] GameObject _beamGO;
+		[SerializeField] AudioSource _collectAudio;
 
 		public void OnCollisionEnter(Collision collision)
 		{
@@ -44,6 +45,7 @@ namespace JJ26.Gameplay
 			_boxCollision.enabled = false;
 			_visualsGO.SetActive(false);
 			_beamGO.SetActive(false);
+			_collectAudio.Play();
 		}
 	}
 }
