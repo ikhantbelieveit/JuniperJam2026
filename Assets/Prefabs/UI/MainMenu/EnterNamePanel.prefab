@@ -257,15 +257,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Name...\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
-  m_sharedMaterial: {fileID: 6632044769077319453, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
+  m_sharedMaterial: {fileID: 1962535644584190282, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4288785802
+  m_fontColor: {r: 0.5411765, g: 0.6784314, b: 0.6313726, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -361,7 +361,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 562, y: 524}
+  m_AnchoredPosition: {x: 579, y: 503}
   m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6843050108835779729
@@ -394,15 +394,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name Your Ship
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
-  m_sharedMaterial: {fileID: 6632044769077319453, guid: 952fd408de1a9494b807063359c70d5d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
+  m_sharedMaterial: {fileID: 1962535644584190282, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4282861527
+  m_fontColor: {r: 0.8415094, g: 0.2778568, b: 0.2778568, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -419,8 +419,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 120
-  m_fontSizeBase: 120
+  m_fontSize: 130
+  m_fontSizeBase: 130
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -458,7 +458,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -251.55115, w: -27.849854}
+  m_margin: {x: -102.21228, y: 0, z: -251.55115, w: -27.849854}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -500,7 +500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.7}
   m_AnchorMax: {x: 0.5, y: 0.7}
-  m_AnchoredPosition: {x: 672, y: 122}
+  m_AnchoredPosition: {x: 638, y: 122}
   m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7023096656143209388
@@ -661,8 +661,28 @@ PrefabInstance:
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_fontSizeBase
       value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
@@ -670,15 +690,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3280460314809480508, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_Color.b
-      value: 0.6396227
+      value: 0.2778568
       objectReference: {fileID: 0}
     - target: {fileID: 3280460314809480508, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.2778568
       objectReference: {fileID: 0}
     - target: {fileID: 3280460314809480508, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_Color.r
-      value: 0.670805
+      value: 0.8415094
       objectReference: {fileID: 0}
     - target: {fileID: 6653528436033964715, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_Pivot.x
