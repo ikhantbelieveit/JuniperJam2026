@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using JJ26.Audio;
 
-public class UIButton : MonoBehaviour, IPointerDownHandler
+namespace JJ26.UI
 {
-    [SerializeField] AudioSource _audio;
-
-    public void OnPointerDown(PointerEventData eventData)
+	public class UIButton : MonoBehaviour, IPointerDownHandler
 	{
-		PlayButtonSound();
-	}
+		public void OnPointerDown(PointerEventData eventData)
+		{
+			PlayButtonSound();
+		}
 
-    public void PlayButtonSound()
-	{
-		_audio.Play();
+		public void PlayButtonSound()
+		{
+			var audioSystem = FindAnyObjectByType(typeof(AudioSystem)) as AudioSystem;
+			audioSystem.PlayButtonClickSound();
+		}
 	}
 }
