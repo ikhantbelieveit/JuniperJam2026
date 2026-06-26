@@ -479,9 +479,21 @@ PrefabInstance:
       value: ConfirmName
       objectReference: {fileID: 0}
     - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9014467502111955913}
+    - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Input_OnConfirmNamePressed
@@ -489,6 +501,10 @@ PrefabInstance:
     - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: JJ26.UI.MainMenuUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881859149218909958, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7023096656143209388, guid: 9dc6a6ac08c85e74dadd7795c281e6ab, type: 3}
       propertyPath: m_TargetGraphic
@@ -678,6 +694,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9014467502111955913}
+    - target: {fileID: 93342684812767911, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 93342684812767911, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Input_HostLobbyPressed
@@ -879,9 +899,21 @@ PrefabInstance:
       value: ConfirmIP
       objectReference: {fileID: 0}
     - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9014467502111955913}
+    - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Input_OnConfirmIPPressed
@@ -889,6 +921,10 @@ PrefabInstance:
     - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: JJ26.UI.MainMenuUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881859149218909958, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7714489557306832523, guid: 371621a54b0821b41bd974075ac5fc52, type: 3}
       propertyPath: m_Pivot.x
@@ -1035,6 +1071,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9014467502111955913}
+    - target: {fileID: 93342684812767911, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 93342684812767911, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Input_JoinLobbyPressed
