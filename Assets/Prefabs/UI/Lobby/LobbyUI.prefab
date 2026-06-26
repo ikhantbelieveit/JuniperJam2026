@@ -515,6 +515,7 @@ MonoBehaviour:
   _rootCanvasGroup: {fileID: 373922162463113276}
   _readyUpButton: {fileID: 8341628335222023248}
   _startGameButton: {fileID: 1662878468140834922}
+  _singlePlayerStartButton: {fileID: 3503073120956159245}
   _buttonRootGO: {fileID: 463951074716118757}
   _playerNameTexts:
   - {fileID: 6029262817910308553}
@@ -997,6 +998,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+--- !u!114 &3503073120956159245 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 93342684812767911, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
+  m_PrefabInstance: {fileID: 3591326982470297514}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7890552840755162369 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6653528436033964715, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}

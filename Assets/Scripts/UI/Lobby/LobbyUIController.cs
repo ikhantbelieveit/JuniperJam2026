@@ -11,6 +11,7 @@ namespace JJ26.UI
 	{
 		[SerializeField] Button _readyUpButton;
 		[SerializeField] Button _startGameButton;
+		[SerializeField] Button _singlePlayerStartButton;
 
 		public Button StartGameButton => _startGameButton;
 
@@ -65,6 +66,8 @@ namespace JJ26.UI
 				_playerReadyTexts[playerIndex].gameObject.SetActive(player.IsReady);
 				_playerNotReadyTexts[playerIndex].gameObject.SetActive(!player.IsReady);
 			}
+
+			_singlePlayerStartButton.gameObject.SetActive(GameNetworkManager.Instance.LobbyPlayers.Count == 1);
 		}
 
 		#endregion //UIController
