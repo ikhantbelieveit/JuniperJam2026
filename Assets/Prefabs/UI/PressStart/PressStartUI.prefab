@@ -135,8 +135,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 258, y: 0}
-  m_SizeDelta: {x: 900, y: 200}
+  m_AnchoredPosition: {x: 293, y: 0}
+  m_SizeDelta: {x: 984.2, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1698684349573186712
 CanvasRenderer:
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SERIOUS GAME JAM
+  m_text: PLUNDERMONIUM
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
   m_sharedMaterial: {fileID: 1962535644584190282, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
@@ -193,8 +193,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 105
-  m_fontSizeBase: 105
+  m_fontSize: 125.79
+  m_fontSizeBase: 125.79
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This time... it's serious.
+  m_text: Seriously Fishy Business!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
   m_sharedMaterial: {fileID: 1962535644584190282, guid: 005a56322a9af8d4a8604992e1052528, type: 2}
@@ -974,9 +974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: m_text
-      value: 'Credits
-
-'
+      value: About
       objectReference: {fileID: 0}
     - target: {fileID: 2871274433039581940, guid: 8c8af5458a9a9b0409a617c024be7507, type: 3}
       propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
