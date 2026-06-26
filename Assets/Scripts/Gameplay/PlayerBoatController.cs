@@ -3,6 +3,8 @@ using Mirror;
 using JJ26.Input;
 using JJ26.Network;
 using JJ26.UI;
+using UnityEngine.UI;
+using TMPro;
 
 namespace JJ26.Gameplay
 {
@@ -11,18 +13,22 @@ namespace JJ26.Gameplay
         [SerializeField] Rigidbody _rb;
 		[SerializeField] float _speedMult = 1f;
 		[SerializeField] float _steeringPower = 15f;
+		[SerializeField] TMP_Text _nameText;
 
 		private DirectionWheel _steeringWheel;
 		private DirectionWheel _powerWheel;
+        public PlayerGameData data;
 
 		private void Start()
 		{
 			GameplayUIController gameUI = FindAnyObjectByType(typeof(GameplayUIController)) as GameplayUIController;
 			_steeringWheel = gameUI.SteeringWheel;
 			_powerWheel = gameUI.PowerWheel;
-		}
 
-		public void FixedUpdate()
+            _nameText.text = data.DisplayName;
+        }
+
+        public void FixedUpdate()
 		{
 			if (GameNetworkManager.Instance.GameState.CurrentState != EGameState.Gameplay) { return; }
 
