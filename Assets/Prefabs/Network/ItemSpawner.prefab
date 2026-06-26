@@ -67,7 +67,7 @@ MonoBehaviour:
   syncInterval: 0
   _spawnDuration_Min: 1
   _spawnDuration_Max: 3
-  _spawnAreaRadius: 275
+  _spawnAreaRadius: 150
   _treasurePrefabs:
   - {fileID: 3546764417615817083, guid: 378851938f4bfb44daefb26b8ed4ba5f, type: 3}
   - {fileID: 3546764417615817083, guid: 37891d8027fd8f047821965060dcfba6, type: 3}

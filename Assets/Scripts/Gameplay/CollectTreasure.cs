@@ -10,6 +10,7 @@ namespace JJ26.Gameplay
 		[SerializeField] float _scoreValue;
 		[SerializeField] BoxCollider _boxCollision;
 		[SerializeField] GameObject _visualsGO;
+		[SerializeField] GameObject _beamGO;
 
 		public void OnCollisionEnter(Collision collision)
 		{
@@ -42,6 +43,7 @@ namespace JJ26.Gameplay
 
 			_boxCollision.enabled = false;
 			_visualsGO.SetActive(false);
+			_beamGO.SetActive(false);
 		}
 	}
 }
