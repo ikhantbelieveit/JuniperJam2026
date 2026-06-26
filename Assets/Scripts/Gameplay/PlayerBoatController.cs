@@ -17,7 +17,6 @@ namespace JJ26.Gameplay
 
 		private DirectionWheel _steeringWheel;
 		private DirectionWheel _powerWheel;
-        public PlayerGameData data;
 
 		private void Start()
 		{
@@ -25,7 +24,14 @@ namespace JJ26.Gameplay
 			_steeringWheel = gameUI.SteeringWheel;
 			_powerWheel = gameUI.PowerWheel;
 
-            _nameText.text = data.DisplayName;
+            foreach(var gamePlayer in GameNetworkManager.Instance.GamePlayers)
+			{
+				if(gamePlayer.connectionToClient == connectionToClient)
+				{
+					_nameText.text = gamePlayer.DisplayName;
+					break;
+				}
+			}
         }
 
         public void FixedUpdate()
@@ -38,6 +44,14 @@ namespace JJ26.Gameplay
 
 			//left/right steering
 			_rb.AddTorque(Vector3.up * -_steeringWheel.InputValue * _steeringPower, ForceMode.Acceleration);
+		}
+
+		public void LateUpdate()
+		{
+			if(Camera.main != null)
+			{
+				_nameText.transform.forward = Camera.main.transform.forward;
+			}
 		}
 	}
 }
