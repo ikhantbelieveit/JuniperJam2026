@@ -69,7 +69,7 @@ namespace JJ26.Network
             float xPos = _spawnCentre.x + r * Mathf.Cos(theta);
             float ZPos = _spawnCentre.x + r * Mathf.Sin(theta);
 
-            int randomItemIndex = Random.Range(0, _treasurePrefabs.Count - 1);
+            int randomItemIndex = Random.Range(0, _treasurePrefabs.Count);
             CollectTreasure prefab = _treasurePrefabs[randomItemIndex];
             CollectTreasure treasure = Instantiate(prefab, new Vector3(xPos, 0.0f, ZPos), Quaternion.identity);
 
